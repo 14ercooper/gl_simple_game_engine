@@ -27,18 +27,32 @@ Object::~Object() {
 	delete postTickScript;
 }
 
-void Object::setMaterial(Material* m) {
-	delete material;
+void Object::setShader(ShaderProgram* shader, bool deleteOld) {
+	if (deleteOld)
+		delete shaderProgram;
+
+	shaderProgram = shader;
+}
+
+ShaderProgram* Object::getShader() {
+	return shaderProgram;
+}
+
+void Object::setMaterial(Material* m, bool deleteOld) {
+	if (deleteOld)
+		delete material;
 	material = m;
 }
 
-void Object::setCollider(Collider* c) {
-	delete collider;
+void Object::setCollider(Collider* c, bool deleteOld) {
+	if (deleteOld)
+		delete collider;
 	collider = c;
 }
 
-void Object::setModel(Model* m) {
-	delete model;
+void Object::setModel(Model* m, bool deleteOld) {
+	if (deleteOld)
+		delete model;
 	model = m;
 }
 
@@ -54,18 +68,21 @@ Model* Object::getModel() {
 	return model;
 }
 
-void Object::setPhysicsTick(Script* s) {
-	delete physicsTickScript;
+void Object::setPhysicsTick(Script* s, bool deleteOld) {
+	if (deleteOld)
+		delete physicsTickScript;
 	physicsTickScript = s;
 }
 
-void Object::setControlTick(Script* s) {
-	delete controlTickScript;
+void Object::setControlTick(Script* s, bool deleteOld) {
+	if (deleteOld)
+		delete controlTickScript;
 	controlTickScript = s;
 }
 
-void Object::setPostTick(Script* s) {
-	delete postTickScript;
+void Object::setPostTick(Script* s, bool deleteOld) {
+	if (deleteOld)
+		delete postTickScript;
 	postTickScript = s;
 }
 

@@ -1,6 +1,11 @@
 
 #include "ShaderProgram.h"
 
+ShaderProgram::ShaderProgram() {
+	// Mark as invalid
+	programHandle = -1;
+}
+
 ShaderProgram::ShaderProgram(std::string vertexShader, std::string fragmentShader) {
 	GLuint vertex = compileShader(vertexShader.c_str(), GL_VERTEX_SHADER);
 	GLuint fragment = compileShader(fragmentShader.c_str(), GL_FRAGMENT_SHADER);
@@ -46,18 +51,26 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string geometryShade
 }
 
 ShaderProgram::~ShaderProgram() {
+	if (programHandle == -1)
+		return;
 	glDeleteProgram(programHandle);
 }
 
 GLuint ShaderProgram::getUniformLocation(std::string name) {
+	if (programHandle == -1)
+		return -1;
 	return glGetUniformLocation(programHandle, name.c_str());
 }
 
 GLuint ShaderProgram::getAttributeLocation(std::string name) {
+	if (programHandle == -1)
+		return -1;
 	return glGetAttribLocation(programHandle, name.c_str());
 }
 
 void ShaderProgram::useProgram() {
+	if (programHandle == -1)
+		return;
 	glUseProgram(programHandle);
 }
 

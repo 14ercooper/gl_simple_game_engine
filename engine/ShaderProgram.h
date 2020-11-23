@@ -10,6 +10,7 @@
 
 class ShaderProgram {
 public:
+	ShaderProgram();
 	ShaderProgram(std::string vertexShader, std::string fragmentShader);
 	ShaderProgram(std::string vertexShader, std::string geometryShader, std::string fragmentShader);
 	~ShaderProgram();

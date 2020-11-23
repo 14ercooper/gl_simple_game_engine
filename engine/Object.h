@@ -8,23 +8,27 @@
 #include "Script.h"
 #include "Model.h"
 #include "Collider.h"
+#include "ShaderProgram.h"
 
 class Object {
 public:
 	Object();
 	~Object();
 
-	void setMaterial(Material* m);
-	void setCollider(Collider* c);
-	void setModel(Model* m);
+	void setShader(ShaderProgram* program, bool deleteOld);
+	ShaderProgram* getShader();
+
+	void setMaterial(Material* m, bool deleteOld);
+	void setCollider(Collider* c, bool deleteOld);
+	void setModel(Model* m, bool deleteOld);
 
 	Material* getMaterial();
 	Collider* getCollider();
 	Model* getModel();
 
-	void setPhysicsTick(Script* s);
-	void setControlTick(Script* s);
-	void setPostTick(Script* s);
+	void setPhysicsTick(Script* s, bool deleteOld);
+	void setControlTick(Script* s, bool deleteOld);
+	void setPostTick(Script* s, bool deleteOld);
 
 	glm::mat4 getTransform();
 	void setTransform(glm::mat4 transform);
@@ -39,6 +43,8 @@ public:
 	bool getDestroy();
 
 private:
+	ShaderProgram* shaderProgram;
+
 	Material* material;
 	Collider* collider;
 	Model* model;
