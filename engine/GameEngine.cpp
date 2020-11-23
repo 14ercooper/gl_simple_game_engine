@@ -61,7 +61,11 @@ bool GameEngine::render() {
 
 	// Delete any objects that have expired
 	for (int i = 0; i < objects.size(); i++) {
-
+		if (objects.at(i)->getDestroy()) {
+			delete objects.at(i);
+			objects.erase(objects.begin() + i);
+			i--; // Don't skip over any objects
+		}
 	}
 
 	// Flush and swap buffers, trigger draw, and poll keypresses
