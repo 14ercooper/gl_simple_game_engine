@@ -1,10 +1,4 @@
 
-#include <GL/glew.h>
-#include <cstdio>
-#include <fstream>
-#include <string>
-#include <cstring>
-
 #include "ShaderProgram.h"
 
 ShaderProgram::ShaderProgram(std::string vertexShader, std::string fragmentShader) {

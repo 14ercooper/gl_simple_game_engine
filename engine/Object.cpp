@@ -1,6 +1,4 @@
 
-#include <glm/glm.hpp>
-
 #include "Object.h"
 
 Object::Object() {
@@ -44,6 +42,18 @@ void Object::setModel(Model* m) {
 	model = m;
 }
 
+Material* Object::getMaterial() {
+	return material;
+}
+
+Collider* Object::getCollider() {
+	return collider;
+}
+
+Model* Object::getModel() {
+	return model;
+}
+
 void Object::setPhysicsTick(Script* s) {
 	delete physicsTickScript;
 	physicsTickScript = s;
@@ -81,4 +91,12 @@ void Object::postTick() {
 
 void Object::draw() {
 	model->draw();
+}
+
+void Object::setDestroy(bool val) {
+	shouldDestroy = val;
+}
+
+bool Object::getDestroy() {
+	return shouldDestroy;
 }

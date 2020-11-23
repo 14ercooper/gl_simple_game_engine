@@ -7,8 +7,4 @@ public:
 	void** run(void** args);
 };
 
-void** Script::run(void** args) {
-	return (void**) 0;
-}
-
 #endif

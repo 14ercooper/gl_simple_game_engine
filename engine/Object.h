@@ -18,6 +18,10 @@ public:
 	void setCollider(Collider* c);
 	void setModel(Model* m);
 
+	Material* getMaterial();
+	Collider* getCollider();
+	Model* getModel();
+
 	void setPhysicsTick(Script* s);
 	void setControlTick(Script* s);
 	void setPostTick(Script* s);
@@ -30,6 +34,9 @@ public:
 	void postTick();
 
 	void draw();
+
+	void setDestroy(bool val);
+	bool getDestroy();
 
 private:
 	Material* material;
@@ -45,6 +52,8 @@ private:
 	void** postTickData;
 
 	glm::mat4 transform;
+
+	bool shouldDestroy;
 };
 
 #endif

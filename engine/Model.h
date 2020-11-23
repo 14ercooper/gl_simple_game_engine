@@ -4,11 +4,8 @@
 
 class Model {
 public:
+	void update();
 	void draw();
 };
-
-void Model::draw() {
-	// Do nothing
-}
 
 #endif

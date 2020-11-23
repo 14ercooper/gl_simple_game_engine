@@ -1,13 +1,6 @@
 
 #include "GameEngine.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <cstdio>
-
 // Create a new engine instance
 GameEngine::GameEngine() {
 	// Set up GLFW window and OpenGL context
@@ -46,10 +39,34 @@ GameEngine::~GameEngine() {
 
 // Draw the scene to the screen
 bool GameEngine::render() {
+	// Tick physics
+	for (Object* obj : objects) {
+		obj->physicsTick();
+	}
+
+	// Tick control
+	for (Object* obj : objects) {
+		obj->controlTick();
+	}
+
+	// Draw
+	for (Object* obj : objects) {
+		obj->draw();
+	}
+
+	// Tick post
+	for (Object* obj : objects) {
+		obj->postTick();
+	}
+
 	// Flush and swap buffers, trigger draw, and poll keypresses
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
 	// Return that we're still drawing
 	return true;
+}
+
+void GameEngine::addObject(Object* o) {
+	objects.push_back(o);
 }

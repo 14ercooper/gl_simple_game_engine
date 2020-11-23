@@ -4,6 +4,8 @@
 
 class Material {
 public:
+	Material();
+
 	float r, g, b, diffuse, specular;
 };
 

@@ -2,8 +2,11 @@
 #ifndef SHADER_PROGRAM_CLASS
 #define SHADER_PROGRAM_CLASS
 
-#include <string>
 #include <GL/glew.h>
+#include <cstdio>
+#include <fstream>
+#include <string>
+#include <cstring>
 
 class ShaderProgram {
 public:
