@@ -1,5 +1,5 @@
 
-##ifndef MATERIAL_CLASS
+#ifndef MATERIAL_CLASS
 #define MATERIAL_CLASS
 
 class Material {
