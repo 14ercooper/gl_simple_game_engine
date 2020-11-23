@@ -59,12 +59,17 @@ bool GameEngine::render() {
 		obj->postTick();
 	}
 
+	// Delete any objects that have expired
+	for (int i = 0; i < objects.size(); i++) {
+
+	}
+
 	// Flush and swap buffers, trigger draw, and poll keypresses
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
 	// Return that we're still drawing
-	return true;
+	return !glfwWindowShouldClose(window);
 }
 
 void GameEngine::addObject(Object* o) {
