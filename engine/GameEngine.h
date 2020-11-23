@@ -16,7 +16,7 @@ public:
 	bool render();
 
 private:
-	// 
+	// The window object
 	GLFWwindow *window;
 };
 

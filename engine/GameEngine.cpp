@@ -27,12 +27,21 @@ GameEngine::GameEngine() {
 
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
+
+	glEnable( GL_DEPTH_TEST );					                    // enable depth testing
+	glDepthFunc( GL_LESS );							                // use less than depth test
+
+	glEnable(GL_BLEND);									            // enable blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	            // use one minus blending equation
+
+	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );	// clear the frame buffer to black
 }
 
 // Clean up our memory
 GameEngine::~GameEngine() {
 	// Delete the window
 	glfwDestroyWindow(window);
+	glfwTerminate();
 }
 
 // Draw the scene to the screen

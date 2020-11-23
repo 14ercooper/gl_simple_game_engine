@@ -10,3 +10,4 @@ include_directories("/usr/include")
 
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(sample_game 14erEngine stbimage glfw libGLEW.so libOpenGL.so)
+
