@@ -28,6 +28,9 @@ GameEngine::GameEngine() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	            // use one minus blending equation
 
 	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );	// clear the frame buffer to black
+
+	objects = std::vector<Object*>();
+	camera = new Camera();
 }
 
 // Clean up our memory
@@ -35,6 +38,15 @@ GameEngine::~GameEngine() {
 	// Delete the window
 	glfwDestroyWindow(window);
 	glfwTerminate();
+
+	delete camera;
+}
+
+void GameEngine::purgeObjects() {
+	for (int i = 0; i < objects.size(); i++) {
+		delete objects.at(i);
+	}
+	objects = std::vector<Object*>();
 }
 
 // Draw the scene to the screen

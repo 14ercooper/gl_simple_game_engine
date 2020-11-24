@@ -14,11 +14,16 @@
 #include "Object.h"
 #include "Collider.h"
 
+#include "Camera.h"
+
 class GameEngine {
 public:
 	// Create a new game engine instance. This creates a window for the game.
 	GameEngine();
 	~GameEngine();
+
+	// Empty objects
+	void purgeObjects();
 
 	// Draw the game to the window in it's current state
 	// Returns: bool on if the window is still open and being drawn to
@@ -33,6 +38,9 @@ private:
 
 	// World objects
 	std::vector<Object*> objects;
+
+	// Camera
+	Camera* camera;
 };
 
 #endif
