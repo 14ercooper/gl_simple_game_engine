@@ -32,6 +32,10 @@ public:
 	// Add an object to the game
 	void addObject(Object* o);
 
+	// Statics to be accessed in objects
+	static GLFWwindow* engineWindow;
+	static Camera* engineCamera;
+
 private:
 	// The window object
 	GLFWwindow *window;

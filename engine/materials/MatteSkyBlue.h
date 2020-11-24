@@ -4,7 +4,8 @@
 
 #include "../Material.h"
 
-class MatteSkyBlue : Material {
+class MatteSkyBlue : public Material {
+public:
 	MatteSkyBlue();
 };
 

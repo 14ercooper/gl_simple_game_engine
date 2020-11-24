@@ -7,7 +7,7 @@
 #include "../Model.h"
 #include "../Vertex.h"
 
-class ColoredCube : Model {
+class ColoredCube : public Model {
 public:
 	void draw();
 

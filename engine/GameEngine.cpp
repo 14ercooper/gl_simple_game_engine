@@ -1,6 +1,9 @@
 
 #include "GameEngine.h"
 
+GLFWwindow* GameEngine::engineWindow = nullptr;
+Camera* GameEngine::engineCamera = nullptr;
+
 // Create a new engine instance
 GameEngine::GameEngine() {
 	// Set up GLFW window and OpenGL context
@@ -51,6 +54,11 @@ void GameEngine::purgeObjects() {
 
 // Draw the scene to the screen
 bool GameEngine::render() {
+	// Update statics
+	GameEngine::engineWindow = this->window;
+	GameEngine::engineCamera = this->engineCamera;
+
+
 	// Tick physics
 	for (Object* obj : objects) {
 		obj->physicsTick();

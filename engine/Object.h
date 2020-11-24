@@ -3,6 +3,7 @@
 #define OBJECT_CLASS
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Material.h"
 #include "Script.h"
@@ -49,7 +50,9 @@ public:
 	void setDestroy(bool val);
 	bool getDestroy();
 
-private:
+	glm::mat4 getModelMatrix();
+
+protected:
 	ShaderProgram* shaderProgram;
 
 	Material* material;

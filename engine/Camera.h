@@ -17,6 +17,7 @@ public:
 
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix(GLFWwindow* window);
+	glm::vec3 getViewingVector();
 };
 
 #endif

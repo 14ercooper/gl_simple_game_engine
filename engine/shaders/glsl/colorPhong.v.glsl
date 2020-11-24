@@ -20,6 +20,7 @@ void main() {
 	gl_Position = projectionMatrix * viewMatrix * transformedVertexPos;
 	mat3 normalMatrix = mat3(transpose(inverse(modelMatrix)));
 	vec3 normalVector = normalize(normalMatrix * vertexNormal);
+	viewingVector = normalize(viewingVector);
 
 	// Global light (change later)
 	vec3 sunDirection = normalize(vec3(-1, -1, 1));

@@ -74,6 +74,21 @@ void ShaderProgram::useProgram() {
 	glUseProgram(programHandle);
 }
 
+void ShaderProgram::uniformFloat(std::string pos, GLfloat value) {
+	useProgram();
+	glUniform1fv(getUniformLocation(pos), 1, &value);
+}
+
+void ShaderProgram::uniformVec3(std::string pos, glm::vec3 value) {
+	useProgram();
+	glUniform3fv(getUniformLocation(pos), 1, &value[0]);
+}
+
+void ShaderProgram::uniformMat4(std::string pos, glm::mat4 value) {
+	useProgram();
+	glUniformMatrix4fv(getUniformLocation(pos), 1, GL_FALSE, &value[0][0]);
+}
+
 void ShaderProgram::readTextFromFile( const char* filename, char* &output ){
 	std::string buf = std::string("");
 	std::string line;

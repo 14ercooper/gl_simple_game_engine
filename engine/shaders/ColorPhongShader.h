@@ -6,7 +6,7 @@
 
 #include "../ShaderProgram.h"
 
-class ColorPhongShader : ShaderProgram {
+class ColorPhongShader : public ShaderProgram {
 public:
 	ColorPhongShader();
 };

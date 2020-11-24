@@ -132,3 +132,10 @@ void Object::setDestroy(bool val) {
 bool Object::getDestroy() {
 	return shouldDestroy;
 }
+
+glm::mat4 Object::getModelMatrix() {
+	glm::mat4 matrix = glm::translate(glm::mat4(1.0f), position);
+	matrix = glm::rotate(matrix, rotation->rotationAngle(), rotation->rotationAxis());
+	matrix = glm::scale(matrix, currentScale);
+	return matrix;
+}

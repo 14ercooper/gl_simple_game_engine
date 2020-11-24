@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <glm/glm.hpp>
 
 class ShaderProgram {
 public:
@@ -19,6 +20,10 @@ public:
 	GLuint getAttributeLocation(std::string name);
 
 	void useProgram();
+
+	void uniformFloat(std::string pos, GLfloat value);
+	void uniformVec3(std::string pos, glm::vec3 value);
+	void uniformMat4(std::string pos, glm::mat4 value);
 
 protected:
 	void readTextFromFile( const char* filename, char* &output );

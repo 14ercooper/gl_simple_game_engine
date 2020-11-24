@@ -19,5 +19,17 @@ ColorPhongShader::ColorPhongShader() {
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+
+	glUseProgram(programHandle);
+
+	// Enable attributes
+	GLuint vertexPosAttr = getAttributeLocation("vertexPosition");
+	GLuint vertexNormalAttr = getAttributeLocation("vertexAttribute");
+
+	glEnableVertexAttribArray(vertexPosAttr);
+	glVertexAttribPointer(vertexPosAttr, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*) 0);
+
+	glEnableVertexAttribArray(vertexNormalAttr);
+	glVertexAttribPointer(vertexNormalAttr, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
 }
 
