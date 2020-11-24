@@ -12,6 +12,8 @@ public:
 	Quaternion();
 	Quaternion(float w, float x, float y, float z);
 
+	~Quaternion();
+
 	void hamilton(Quaternion* other);
 	void euler(float theta, float x, float y, float z);
 	void normalize();

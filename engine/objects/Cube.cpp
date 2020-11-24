@@ -16,6 +16,8 @@ void CubeObject::draw() {
 	// Use shader
 	shaderProgram->useProgram();
 
+	GameEngine::engineShaderProgram = shaderProgram;
+
 	// Buffer mvp uniforms
 	shaderProgram->uniformMat4("modelMatrix", getModelMatrix());
 	shaderProgram->uniformMat4("viewMatrix", GameEngine::engineCamera->getViewMatrix());

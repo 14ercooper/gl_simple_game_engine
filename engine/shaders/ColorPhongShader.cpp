@@ -21,10 +21,12 @@ ColorPhongShader::ColorPhongShader() {
 	glDeleteShader(fragment);
 
 	glUseProgram(programHandle);
+}
 
+void ColorPhongShader::enableAttribs() {
 	// Enable attributes
 	GLuint vertexPosAttr = getAttributeLocation("vertexPosition");
-	GLuint vertexNormalAttr = getAttributeLocation("vertexAttribute");
+	GLuint vertexNormalAttr = getAttributeLocation("vertexNormal");
 
 	glEnableVertexAttribArray(vertexPosAttr);
 	glVertexAttribPointer(vertexPosAttr, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*) 0);

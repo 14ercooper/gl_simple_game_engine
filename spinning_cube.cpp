@@ -5,8 +5,9 @@
 
 int main () {
 	GameEngine *engine = new GameEngine();
+	
 	Quaternion *rotateCube = new Quaternion();
-	rotateCube->euler(0.05f, 1, 2, 1);
+	rotateCube->euler(0.01f, 1, 2, 1);
 
 	CubeObject *cube = new CubeObject();
 

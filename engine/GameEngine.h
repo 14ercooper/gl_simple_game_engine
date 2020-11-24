@@ -35,6 +35,7 @@ public:
 	// Statics to be accessed in objects
 	static GLFWwindow* engineWindow;
 	static Camera* engineCamera;
+	static ShaderProgram* engineShaderProgram;
 
 private:
 	// The window object

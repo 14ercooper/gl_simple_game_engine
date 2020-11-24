@@ -6,6 +6,7 @@
 
 #include "../Model.h"
 #include "../Vertex.h"
+#include "../GameEngine.h"
 
 class ColoredCube : public Model {
 public:

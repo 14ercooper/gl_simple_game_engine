@@ -13,6 +13,10 @@ Quaternion::Quaternion(float w, float x, float y, float z) {
 	this->z = z;
 }
 
+Quaternion::~Quaternion() {
+	
+}
+
 void Quaternion::hamilton (Quaternion* other) {
 	this->w = (w*other->w) - (x*other->x) - (y*other->y) - (z*other->z);
 	this->x = (w*other->x) + (x*other->w) + (y*other->z) - (z*other->y);

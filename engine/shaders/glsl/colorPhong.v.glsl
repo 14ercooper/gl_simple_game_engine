@@ -20,10 +20,10 @@ void main() {
 	gl_Position = projectionMatrix * viewMatrix * transformedVertexPos;
 	mat3 normalMatrix = mat3(transpose(inverse(modelMatrix)));
 	vec3 normalVector = normalize(normalMatrix * vertexNormal);
-	viewingVector = normalize(viewingVector);
+	vec3 normalViewingVector = normalize(viewingVector);
 
 	// Global light (change later)
-	vec3 sunDirection = normalize(vec3(-1, -1, 1));
+	vec3 sunDirection = normalize(vec3(1, 1, -1));
 
 	// Coloring
 	vec3 diffuseColor = vec3(0, 0, 0);
@@ -36,13 +36,13 @@ void main() {
 	diffuseColor = diffuseColor + colorIntensity;
 
 	// Calc specular
-	vec3 reflectionVector = -sunDirection + (2 * dot(normalVector, sunDirection))) * normalVector;
-	vec3 specularIntensity = materialColor * pow(max(dot(viewingVector, reflectionVector), 0), alpha);
+	vec3 reflectionVector = -sunDirection + (2 * dot(normalVector, sunDirection)) * normalVector;
+	vec3 specularIntensity = materialColor * pow(max(dot(normalViewingVector, reflectionVector), 0), alpha);
 	specularColor = specularColor + specularIntensity;
 
 	// Ambient light
 	vec3 ambientColor = vec3(0.05, 0.05, 0.05);
 
 	// Combine with weights
-	color = (materialDiffuse * diffuseColor) + (materialSpecular * specularColor) + ambientColor;
+	color = (materialDiffuse * diffuseColor) + (materialSpecularity * specularColor) + ambientColor;
 }

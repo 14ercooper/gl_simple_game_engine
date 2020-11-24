@@ -66,6 +66,9 @@ void ColoredCube::draw() {
 		glGenBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
+		// Enable attribs
+		GameEngine::engineShaderProgram->enableAttribs();
+
 		// Buffer data to 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
 	}

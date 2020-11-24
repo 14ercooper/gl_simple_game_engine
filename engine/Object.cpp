@@ -17,6 +17,8 @@ Object::Object() {
 	position = glm::vec3(0.0f, 0.0f, 0.0f);
 	rotation = new Quaternion();
 	currentScale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	shouldDestroy = false;
 }
 
 Object::~Object() {
@@ -28,7 +30,7 @@ Object::~Object() {
 	delete controlTickScript;
 	delete postTickScript;
 
-	delete rotation;
+	// delete rotation; // TODO figure out why this crashes
 }
 
 void Object::setShader(ShaderProgram* shader, bool deleteOld) {

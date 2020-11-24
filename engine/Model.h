@@ -4,7 +4,7 @@
 
 class Model {
 public:
-	void draw();
+	virtual void draw();
 };
 
 #endif

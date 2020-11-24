@@ -25,6 +25,8 @@ public:
 	void uniformVec3(std::string pos, glm::vec3 value);
 	void uniformMat4(std::string pos, glm::mat4 value);
 
+	virtual void enableAttribs();
+
 protected:
 	void readTextFromFile( const char* filename, char* &output );
 	void printLog( GLuint handle );

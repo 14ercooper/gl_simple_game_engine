@@ -146,6 +146,7 @@ GLuint ShaderProgram::compileShader( const char* filename, GLenum shaderType ) {
 	readTextFromFile( filename, shaderString );
 
 	// TODO #01 create a handle for our shader of the corresponding type
+	
 	GLuint shaderHandle = glCreateShader(shaderType);
 	if (shaderHandle == 0)
 		fprintf(stderr, "Cannot get handle for shader\n");
@@ -163,4 +164,8 @@ GLuint ShaderProgram::compileShader( const char* filename, GLenum shaderType ) {
 	printLog( shaderHandle );
 
 	return shaderHandle;
+}
+
+void ShaderProgram::enableAttribs() {
+	// Do nothing
 }

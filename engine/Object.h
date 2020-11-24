@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <cstdlib>
+
 #include "Material.h"
 #include "Script.h"
 #include "Model.h"
@@ -45,7 +47,7 @@ public:
 	void controlTick();
 	void postTick();
 
-	void draw();
+	virtual void draw();
 
 	void setDestroy(bool val);
 	bool getDestroy();
