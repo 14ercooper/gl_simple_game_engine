@@ -4,7 +4,6 @@
 
 class Model {
 public:
-	void update();
 	void draw();
 };
 
