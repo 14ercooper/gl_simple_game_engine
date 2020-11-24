@@ -9,11 +9,21 @@
 #include "Model.h"
 #include "Collider.h"
 #include "ShaderProgram.h"
+#include "math/Quaternion.h"
 
 class Object {
 public:
 	Object();
 	~Object();
+
+	glm::vec3 position;
+	Quaternion* rotation;
+	glm::vec3 currentScale;
+
+	void translate(glm::vec3 amount);
+	void rotate(Quaternion* rotation);
+	void rotate(float theta, float x, float y, float z);
+	void scale(glm::vec3 amount);
 
 	void setShader(ShaderProgram* program, bool deleteOld);
 	ShaderProgram* getShader();
@@ -29,9 +39,6 @@ public:
 	void setPhysicsTick(Script* s, bool deleteOld);
 	void setControlTick(Script* s, bool deleteOld);
 	void setPostTick(Script* s, bool deleteOld);
-
-	glm::mat4 getTransform();
-	void setTransform(glm::mat4 transform);
 
 	void physicsTick();
 	void controlTick();
@@ -56,8 +63,6 @@ private:
 	void** physicsTickData;
 	void** controlTickData;
 	void** postTickData;
-
-	glm::mat4 transform;
 
 	bool shouldDestroy;
 };

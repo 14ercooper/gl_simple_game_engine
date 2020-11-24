@@ -14,7 +14,9 @@ Object::Object() {
 	controlTickData = (void **) 0;
 	postTickData = (void **) 0;
 
-	transform = glm::mat4(1.0f);
+	position = glm::vec3(0.0f, 0.0f, 0.0f);
+	rotation = new Quaternion();
+	currentScale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
 Object::~Object() {
@@ -25,6 +27,8 @@ Object::~Object() {
 	delete physicsTickScript;
 	delete controlTickScript;
 	delete postTickScript;
+
+	delete rotation;
 }
 
 void Object::setShader(ShaderProgram* shader, bool deleteOld) {
@@ -36,6 +40,25 @@ void Object::setShader(ShaderProgram* shader, bool deleteOld) {
 
 ShaderProgram* Object::getShader() {
 	return shaderProgram;
+}
+
+void Object::translate(glm::vec3 amount) {
+	position += amount;
+}
+
+void Object::rotate(Quaternion* rotation) {
+	this->rotation->hamilton(rotation);
+}
+
+void Object::rotate(float theta, float x, float y, float z) {
+	Quaternion* rot = new Quaternion();
+	rot->euler(theta, x, y, z);
+	this->rotation->hamilton(rot);
+	delete rot;
+}
+
+void Object::scale(glm::vec3 amount) {
+	currentScale *= amount;
 }
 
 void Object::setMaterial(Material* m, bool deleteOld) {
@@ -84,14 +107,6 @@ void Object::setPostTick(Script* s, bool deleteOld) {
 	if (deleteOld)
 		delete postTickScript;
 	postTickScript = s;
-}
-
-glm::mat4 Object::getTransform() {
-	return transform;
-}
-
-void Object::setTransform(glm::mat4 trans) {
-	this->transform = trans;
 }
 
 void Object::physicsTick() {
