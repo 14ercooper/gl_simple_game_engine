@@ -6,6 +6,7 @@ int main () {
 
 	while (engine->render());
 
+	engine->purgeObjects();
 	delete engine;
 
 	return 0;
