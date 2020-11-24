@@ -8,7 +8,8 @@
 #include "../models/ColoredCube.h"
 #include "../GameEngine.h"
 
-class CubeObject : Object {
+class CubeObject : public Object {
+public:
 	CubeObject();
 
 	void draw();

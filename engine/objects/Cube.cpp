@@ -30,4 +30,5 @@ void CubeObject::draw() {
 	shaderProgram->uniformVec3("viewingVector", GameEngine::engineCamera->getViewingVector());
 
 	// Draw model
+	model->draw();
 }
