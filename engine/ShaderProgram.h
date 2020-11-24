@@ -20,7 +20,7 @@ public:
 
 	void useProgram();
 
-private:
+protected:
 	void readTextFromFile( const char* filename, char* &output );
 	void printLog( GLuint handle );
 	GLuint compileShader( const char* filename, GLenum shaderType );
