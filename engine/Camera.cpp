@@ -2,16 +2,14 @@
 #include "Camera.h"
 
 Camera::Camera() {
-	pos = glm::vec3(5.0f, 2.0f, 0.0f);
-	up = glm::vec3(0.0f, 1.0f, 0.0f);
-	lookAt = glm::vec3(0.0f, 0.0f, 0.0f);
+	this->pos = glm::vec3(5.0f, 2.0f, 0.0f);
+	this->up = glm::vec3(0.0f, 1.0f, 0.0f);
+	this->lookAt = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
 glm::mat4 Camera::getViewMatrix() {
-	// return glm::lookAt(pos, lookAt, up); // TODO figure out why this segfaults
-	return glm::lookAt( glm::vec3(5.0f, 2.0f, 0.0f),
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(0.0f, 1.0f, 0.0f));
+	// printf("%p\n", &pos);
+	return glm::lookAt(pos, lookAt, up);
 }
 
 glm::mat4 Camera::getProjectionMatrix(GLFWwindow* window) {
@@ -21,6 +19,5 @@ glm::mat4 Camera::getProjectionMatrix(GLFWwindow* window) {
 }
 
 glm::vec3 Camera::getViewingVector() {
-	// return glm::normalize(pos - lookAt); // TODO this likely errors for the same reason as above
-	return glm::normalize(glm::vec3(5.0f, 2.0f, 0.0f) - glm::vec3(0.0f, 0.0f, 0.0f));
+	return glm::normalize(pos - lookAt);
 }

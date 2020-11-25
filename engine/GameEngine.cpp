@@ -100,7 +100,7 @@ bool GameEngine::render() {
 	
 	// Update statics
 	GameEngine::engineWindow = this->window;
-	GameEngine::engineCamera = this->engineCamera;
+	GameEngine::engineCamera = this->camera;
 
 	// Tick physics
 	for (Object* obj : objects) {
