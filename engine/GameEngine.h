@@ -32,7 +32,14 @@ public:
 	// Add an object to the game
 	void addObject(Object* o);
 
-	// Statics to be accessed in objects
+	// Check for collisions
+	std::vector<Object*> checkCollisions(Collider* c);
+	std::vector<Object*> checkTriggers(Collider* c);
+	std::vector<Object*> checkCollisions(Collider* c, float testX, float testY, float testZ);
+	std::vector<Object*> checkTriggers(Collider* c, float testX, float testY, float testZ);
+
+	// Statics to be accessed and used in objects
+	static GameEngine* engine;
 	static GLFWwindow* engineWindow;
 	static Camera* engineCamera;
 	static ShaderProgram* engineShaderProgram;
@@ -43,6 +50,12 @@ private:
 
 	// World objects
 	std::vector<Object*> objects;
+
+	// Collision map is only calculated one per frame, before physics
+	bool doneCollisionCalc;
+	void doCollisionCalc();
+	std::vector<Object*> colliders;
+	std::vector<Object*> triggers;
 
 	// Camera
 	Camera* camera;

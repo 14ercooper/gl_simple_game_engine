@@ -1,6 +1,7 @@
 
 #include "GameEngine.h"
 
+GameEngine* GameEngine::engine = nullptr;
 GLFWwindow* GameEngine::engineWindow = nullptr;
 Camera* GameEngine::engineCamera = nullptr;
 ShaderProgram* GameEngine::engineShaderProgram = nullptr;
@@ -69,6 +70,8 @@ GameEngine::GameEngine() {
 
 	objects = std::vector<Object*>();
 	camera = new Camera();
+
+	doneCollisionCalc = false;
 }
 
 // Clean up our memory
@@ -99,6 +102,7 @@ bool GameEngine::render() {
     glViewport( 0, 0, windowWidth, windowHeight );
 	
 	// Update statics
+	GameEngine::engine = this;
 	GameEngine::engineWindow = this->window;
 	GameEngine::engineCamera = this->camera;
 
@@ -136,10 +140,90 @@ bool GameEngine::render() {
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
+	// Reset the collisions flag
+	doneCollisionCalc = false;
+
 	// Return that we're still drawing
 	return !glfwWindowShouldClose(window);
 }
 
 void GameEngine::addObject(Object* o) {
 	objects.push_back(o);
+}
+
+std::vector<Object*> GameEngine::checkCollisions(Collider* c) {
+	std::vector<Object*> collisionsFound;
+
+	for (Object* o : colliders) {
+		if (o->getCollider() == nullptr)
+			continue;
+		if (c->isColliding(o->getCollider())) {
+			collisionsFound.push_back(o);
+		}
+	}
+
+	return collisionsFound;
+}
+
+std::vector<Object*> GameEngine::checkTriggers(Collider* c) {
+	std::vector<Object*> collisionsFound;
+
+	for (Object* o : triggers) {
+		if (o->getCollider() == nullptr)
+			continue;
+		if (c->isTriggered(o->getCollider())) {
+			collisionsFound.push_back(o);
+		}
+	}
+
+	return collisionsFound;
+}
+
+std::vector<Object*> GameEngine::checkCollisions(Collider* c, float testX, float testY, float testZ) {
+	std::vector<Object*> collisionsFound;
+
+	for (Object* o : colliders) {
+		if (o->getCollider() == nullptr)
+			continue;
+		if (c->isColliding(o->getCollider(), testX, testY, testZ)) {
+			collisionsFound.push_back(o);
+		}
+	}
+
+	return collisionsFound;
+}
+
+std::vector<Object*> GameEngine::checkTriggers(Collider* c, float testX, float testY, float testZ) {
+	std::vector<Object*> collisionsFound;
+
+	for (Object* o : triggers) {
+		if (o->getCollider() == nullptr)
+			continue;
+		if (c->isTriggered(o->getCollider(), testX, testY, testZ)) {
+			collisionsFound.push_back(o);
+		}
+	}
+
+	return collisionsFound;
+}
+
+void GameEngine::doCollisionCalc() {
+	if (doneCollisionCalc)
+		return;
+
+	// Make sure this doesn't destroy the objects
+	colliders.erase(colliders.begin(), colliders.begin() + colliders.size());
+	triggers.erase(triggers.begin(), triggers.begin() + triggers.size());
+
+	// Go through objects and build up the lists
+	for (int i = 0; i < objects.size(); i++) {
+		if (objects.at(i)->getCollider() == nullptr)
+			continue;
+		else if (objects.at(i)->getCollider()->isTrigger)
+			triggers.push_back(objects.at(i));
+		else
+			colliders.push_back(objects.at(i));
+	}
+
+	doneCollisionCalc = true;
 }
