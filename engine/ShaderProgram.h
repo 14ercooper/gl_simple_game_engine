@@ -31,6 +31,7 @@ protected:
 	void readTextFromFile( const char* filename, char* &output );
 	void printLog( GLuint handle );
 	GLuint compileShader( const char* filename, GLenum shaderType );
+	GLuint compileShaderText(const char* shaderString, GLenum shaderType);
 
 	GLuint programHandle;
 };

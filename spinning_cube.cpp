@@ -17,6 +17,8 @@ int main () {
 		cube->rotation->hamilton(rotateCube);
 	}
 
+	delete rotateCube;
+
 	engine->purgeObjects();
 	delete engine;
 

@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <cstdlib>
+#include <cstdio>
 
 #include "Material.h"
 #include "Script.h"

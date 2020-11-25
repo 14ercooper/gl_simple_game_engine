@@ -3,6 +3,7 @@
 #define COLOR_PHONG_SHADER_CLASS
 
 #include <GL/glew.h>
+#include <string>
 
 #include "../ShaderProgram.h"
 #include "../GameEngine.h"
@@ -12,6 +13,9 @@ public:
 	ColorPhongShader();
 
 	void enableAttribs();
+
+	static const char* vertexProgram;
+	static const char* fragmentProgram;
 };
 
 #endif

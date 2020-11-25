@@ -89,6 +89,10 @@ void ShaderProgram::uniformMat4(std::string pos, glm::mat4 value) {
 	glUniformMatrix4fv(getUniformLocation(pos), 1, GL_FALSE, &value[0][0]);
 }
 
+void ShaderProgram::enableAttribs() {
+	// Do nothing
+}
+
 void ShaderProgram::readTextFromFile( const char* filename, char* &output ){
 	std::string buf = std::string("");
 	std::string line;
@@ -142,22 +146,22 @@ void ShaderProgram::printLog( GLuint handle ) {
 GLuint ShaderProgram::compileShader( const char* filename, GLenum shaderType ) {
 	char *shaderString;
 
-	// LOOK HERE #1 read in each text file and store the contents in a string
+	// read in each text file and store the contents in a string
 	readTextFromFile( filename, shaderString );
 
-	// TODO #01 create a handle for our shader of the corresponding type
+	// create a handle for our shader of the corresponding type
 	
 	GLuint shaderHandle = glCreateShader(shaderType);
 	if (shaderHandle == 0)
 		fprintf(stderr, "Cannot get handle for shader\n");
 
-	// TODO #02 send the contents of each program to the GPU
+	// send the contents of each program to the GPU
 	glShaderSource(shaderHandle, 1, (const char**)&shaderString, NULL);
 
 	// we are good programmers so free up the memory used by each buffer
 	delete [] shaderString;
 
-	// TODO #03 compile each shader on the GPU
+	// compile each shader on the GPU
 	glCompileShader(shaderHandle);
 
 	// print the log for this shader handle to verify it compiled correctly
@@ -166,6 +170,19 @@ GLuint ShaderProgram::compileShader( const char* filename, GLenum shaderType ) {
 	return shaderHandle;
 }
 
-void ShaderProgram::enableAttribs() {
-	// Do nothing
+GLuint ShaderProgram::compileShaderText( const char* shaderString, GLenum shaderType ) {
+	GLuint shaderHandle = glCreateShader(shaderType);
+	if (shaderHandle == 0)
+		fprintf(stderr, "Cannot get handle for shader\n");
+
+	// send the contents of each program to the GPU
+	glShaderSource(shaderHandle, 1, (const char**)&shaderString, NULL);
+
+	// compile each shader on the GPU
+	glCompileShader(shaderHandle);
+
+	// print the log for this shader handle to verify it compiled correctly
+	printLog( shaderHandle );
+
+	return shaderHandle;
 }
