@@ -3,7 +3,7 @@
 
 CubeObject::CubeObject () {
 	// Load shader
-	shaderProgram = new ColorPhongShader();
+	shaderProgram = new ColorGouradShader();
 
 	// Load material
 	material = new MatteSkyBlue();

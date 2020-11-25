@@ -10,9 +10,10 @@
 #include "Material.h"
 #include "Script.h"
 #include "Model.h"
-#include "Collider.h"
 #include "ShaderProgram.h"
 #include "math/Quaternion.h"
+
+class Collider;
 
 class Object {
 public:
@@ -71,5 +72,8 @@ protected:
 
 	bool shouldDestroy;
 };
+
+// This just feels hacky
+#include "Collider.h"
 
 #endif

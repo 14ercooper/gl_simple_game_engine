@@ -1,7 +1,7 @@
 
-#include "ColorPhongShader.h"
+#include "ColorGouradShader.h"
 
-const char* ColorPhongShader::vertexProgram =
+const char* ColorGouradShader::vertexProgram =
 R"V0G0N(#version 410 core
 
 in vec3 vertexPosition;
@@ -52,7 +52,7 @@ void main() {
 }
 )V0G0N";
 
-const char* ColorPhongShader::fragmentProgram =
+const char* ColorGouradShader::fragmentProgram =
 R"V0G0N(#version 410 core
 
 in vec3 color;
@@ -63,9 +63,9 @@ void main() {
 }
 )V0G0N";
 
-ColorPhongShader::ColorPhongShader() {
-	GLuint vertex = compileShaderText(ColorPhongShader::vertexProgram, GL_VERTEX_SHADER);
-	GLuint fragment = compileShaderText(ColorPhongShader::fragmentProgram, GL_FRAGMENT_SHADER);
+ColorGouradShader::ColorGouradShader() {
+	GLuint vertex = compileShaderText(ColorGouradShader::vertexProgram, GL_VERTEX_SHADER);
+	GLuint fragment = compileShaderText(ColorGouradShader::fragmentProgram, GL_FRAGMENT_SHADER);
 
 	programHandle = glCreateProgram();
 
@@ -85,7 +85,7 @@ ColorPhongShader::ColorPhongShader() {
 	glUseProgram(programHandle);
 }
 
-void ColorPhongShader::enableAttribs() {
+void ColorGouradShader::enableAttribs() {
 	// Enable attributes
 	GLuint vertexPosAttr = getAttributeLocation("vertexPosition");
 	GLuint vertexNormalAttr = getAttributeLocation("vertexNormal");

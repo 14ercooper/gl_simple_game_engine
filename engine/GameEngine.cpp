@@ -84,7 +84,7 @@ void GameEngine::purgeObjects() {
 	for (int i = 0; i < objects.size(); i++) {
 		delete objects.at(i);
 	}
-	objects = std::vector<Object*>();
+	objects.clear();
 }
 
 // Draw the scene to the screen

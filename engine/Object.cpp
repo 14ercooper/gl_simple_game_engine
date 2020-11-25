@@ -3,7 +3,7 @@
 
 Object::Object() {
 	material = new Material();
-	collider = new Collider();
+	collider = nullptr;
 	model = new Model();
 
 	physicsTickScript = new Script();
@@ -71,7 +71,8 @@ void Object::setMaterial(Material* m, bool deleteOld) {
 
 void Object::setCollider(Collider* c, bool deleteOld) {
 	if (deleteOld)
-		delete collider;
+		if (collider != nullptr)
+			delete collider;
 	collider = c;
 }
 

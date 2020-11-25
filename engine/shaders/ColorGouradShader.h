@@ -1,6 +1,6 @@
 
-#ifndef COLOR_PHONG_SHADER_CLASS
-#define COLOR_PHONG_SHADER_CLASS
+#ifndef COLOR_GOURAD_SHADER_CLASS
+#define COLOR_GOURAD_SHADER_CLASS
 
 #include <GL/glew.h>
 #include <string>
@@ -8,9 +8,9 @@
 #include "../ShaderProgram.h"
 #include "../GameEngine.h"
 
-class ColorPhongShader : public ShaderProgram {
+class ColorGouradShader : public ShaderProgram {
 public:
-	ColorPhongShader();
+	ColorGouradShader();
 
 	void enableAttribs();
 

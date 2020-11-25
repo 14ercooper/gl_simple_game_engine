@@ -3,7 +3,7 @@
 #define CUBE_OBJECT_CLASS
 
 #include "../Object.h"
-#include "../shaders/ColorPhongShader.h"
+#include "../shaders/ColorGouradShader.h"
 #include "../materials/MatteSkyBlue.h"
 #include "../models/ColoredCube.h"
 #include "../GameEngine.h"
