@@ -8,11 +8,15 @@
 #include "engine/objects/Cube.h"
 #include "engine/objects/Plane.h"
 #include "engine/scripts/SimplePhysics.h"
+#include "engine/scripts/CloseOnEscape.h"
 #include "engine/shaders/SecondPassShader.h"
 
 int main () {
 	GameEngine *engine = new GameEngine();
 	engine->setWindowSize(-1, -1);
+
+	CloseOnEscape* closeScript = new CloseOnEscape();
+	engine->addScript(closeScript);
 	
 	Quaternion *rotateCube = new Quaternion();
 	rotateCube->euler(0.01f, 1, 2, 1);
@@ -36,6 +40,7 @@ int main () {
 	}
 
 	delete rotateCube;
+	delete closeScript;
 
 	engine->purgeObjects();
 	delete engine;

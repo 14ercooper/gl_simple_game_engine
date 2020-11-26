@@ -198,6 +198,10 @@ void GameEngine::addObject(Object* o) {
 	objects.push_back(o);
 }
 
+void GameEngine::addScript(Script* s) {
+	engineScripts.push_back(s);
+}
+
 std::vector<Object*> GameEngine::checkCollisions(Collider* c) {
 	std::vector<Object*> collisionsFound;
 

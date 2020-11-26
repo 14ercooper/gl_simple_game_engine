@@ -38,8 +38,9 @@ public:
 	// Returns: bool on if the window is still open and being drawn to
 	bool render();
 
-	// Add an object to the game
+	// Add an object or script to the game
 	void addObject(Object* o);
+	void addScript(Script* s);
 
 	// Check for collisions
 	std::vector<Object*> checkCollisions(Collider* c);
