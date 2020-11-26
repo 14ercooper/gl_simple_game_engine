@@ -6,6 +6,8 @@ class Material {
 public:
 	Material();
 
+	void use();
+
 	float r, g, b, diffuse, specular;
 };
 

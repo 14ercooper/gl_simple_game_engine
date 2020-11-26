@@ -1,21 +1,14 @@
 
-#include "Cube.h"
+#include "Plane.h"
 
-CubeObject::CubeObject () {
-	// Load shader
+PlaneObject::PlaneObject () {
 	shaderProgram = new ColorGouradShader();
-
-	// Load material
-	material = new MatteSkyBlue();
-
-	// Load model
-	model = new ColoredCube();
+	material = new MatteLightGreen();
+	model = new PlaneModel();
 }
 
-void CubeObject::draw() {
-	// Use shader
+void PlaneObject::draw() {
 	shaderProgram->useProgram();
-
 	GameEngine::engineShaderProgram = shaderProgram;
 
 	// Buffer mvp uniforms

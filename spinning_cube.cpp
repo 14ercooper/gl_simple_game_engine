@@ -4,6 +4,7 @@
 #include "engine/GameEngine.h"
 #include "engine/math/Quaternion.h"
 #include "engine/objects/Cube.h"
+#include "engine/objects/Plane.h"
 
 int main () {
 	GameEngine *engine = new GameEngine();
@@ -27,6 +28,11 @@ int main () {
 	CubeObject *cube3 = new CubeObject();
 	cube3->translate(glm::vec3(-3.0f, 0.0f, 2.0f));
 	engine->addObject(cube3);
+
+	PlaneObject *ground = new PlaneObject();
+	ground->translate(glm::vec3(0.0f, -3.0f, 0.0f));
+	ground->scale(glm::vec3(10.0f, 0.001f, 10.0f));
+	engine->addObject(ground);
 
 	while (engine->render()) {
 		cube->rotation->hamilton(rotateCube);
