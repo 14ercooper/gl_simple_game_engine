@@ -53,13 +53,13 @@ void Object::translate(glm::vec3 amount) {
 
 int Object::quarterstepTranslate(glm::vec3 amount) {
 	if (collider == nullptr || collider->isTrigger) {
-		translate(amount);
+		position += amount;
 		return 4;
 	}
 	glm::vec3 quaterstep = amount * 0.25f;
 	for (int i = 0; i < 4; i++) {
 		if (GameEngine::engine->checkCollisions(collider, quaterstep.x, quaterstep.y, quaterstep.z).size() == 0) {
-			translate(quaterstep);
+			position += quaterstep;
 		}
 		else {
 			return i;

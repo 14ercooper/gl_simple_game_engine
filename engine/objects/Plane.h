@@ -7,6 +7,7 @@
 #include "../materials/MatteLightGreen.h"
 #include "../models/Plane.h"
 #include "../GameEngine.h"
+#include "../Collider.h"
 
 class PlaneObject : public Object {
 public:

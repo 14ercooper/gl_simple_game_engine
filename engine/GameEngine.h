@@ -13,7 +13,7 @@
 
 #include "Object.h"
 #include "Collider.h"
-
+#include "ShaderProgram.h"
 #include "Camera.h"
 
 class GameEngine {
@@ -21,6 +21,9 @@ public:
 	// Create a new game engine instance. This creates a window for the game.
 	GameEngine();
 	~GameEngine();
+
+	// Set the window size. If either are < 1, full screen
+	void setWindowSize(int width, int height);
 
 	// Empty objects
 	void purgeObjects();

@@ -10,6 +10,9 @@ CubeObject::CubeObject () {
 
 	// Load model
 	model = new ColoredCube();
+
+	// Set collider
+	setCollider(new Collider(this), false);
 }
 
 void CubeObject::draw() {

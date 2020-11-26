@@ -84,6 +84,17 @@ GameEngine::~GameEngine() {
 	delete camera;
 }
 
+void GameEngine::setWindowSize(int width, int height) {
+	if (width < 1 || height < 1) {
+		// Full screen
+		glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 19200, 10800, GLFW_DONT_CARE);
+	}
+	else {
+		// Windowed
+		glfwSetWindowMonitor(window, NULL, 0, 0, width, height, GLFW_DONT_CARE);
+	}
+}
+
 void GameEngine::purgeObjects() {
 	for (int i = 0; i < objects.size(); i++) {
 		delete objects.at(i);

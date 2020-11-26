@@ -5,6 +5,8 @@ PlaneObject::PlaneObject () {
 	shaderProgram = new ColorGouradShader();
 	material = new MatteLightGreen();
 	model = new PlaneModel();
+	setCollider(new Collider(this), false);
+	scale(glm::vec3(1.0f, 0.0001f, 1.0f));
 }
 
 void PlaneObject::draw() {

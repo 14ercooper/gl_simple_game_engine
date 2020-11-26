@@ -45,12 +45,12 @@ public:
 	Collider* getCollider();
 	Model* getModel();
 
-	void setPhysicsTick(Script* s, bool deleteOld);
 	void setControlTick(Script* s, bool deleteOld);
+	void setPhysicsTick(Script* s, bool deleteOld);
 	void setPostTick(Script* s, bool deleteOld);
 
-	void physicsTick();
 	void controlTick();
+	void physicsTick();
 	void postTick();
 
 	virtual void draw();

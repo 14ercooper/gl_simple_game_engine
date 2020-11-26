@@ -5,6 +5,8 @@
 #include <set>
 #include <string>
 
+#include <cstdio>
+
 #include "Object.h"
 
 struct CollisionPoint {

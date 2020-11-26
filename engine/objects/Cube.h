@@ -7,6 +7,7 @@
 #include "../materials/MatteSkyBlue.h"
 #include "../models/ColoredCube.h"
 #include "../GameEngine.h"
+#include "../Collider.h"
 
 class CubeObject : public Object {
 public:

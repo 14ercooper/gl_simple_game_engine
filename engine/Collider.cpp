@@ -86,31 +86,33 @@ bool Collider::isTriggered(Collider* other, float testX, float testY, float test
 }
 
 bool Collider::collideHelper(Collider* other, float testX, float testY, float testZ) {
+	if (other == nullptr)
+		return false;
+
 	// Do AABB check
 	// Get ranges
 	float thisXMin, thisXMax, thisYMin, thisYMax, thisZMin, thisZMax;
+	float otherXMin, otherXMax, otherYMin, otherYMax, otherZMin, otherZMax;
 	thisXMin = thisYMin = thisZMin = -1.0f;
 	thisXMax = thisYMax = thisZMax = 1.0f;
+	otherXMin = otherYMin = otherZMin = -1.0f;
+	otherXMax = otherYMax = otherZMax = 1.0f;
 	if (follow != nullptr) {
-		thisXMin = this->follow->position.x + testX - this->x;
-		thisXMax = this->follow->position.x + testX + this->x;
-		thisYMin = this->follow->position.y + testY - this->y;
-		thisYMax = this->follow->position.y + testY + this->y;
-		thisZMin = this->follow->position.z + testZ - this->z;
-		thisZMax = this->follow->position.z + testZ + this->z;
-		thisXMax *= this->follow->currentScale.x;
-		thisXMin *= this->follow->currentScale.x;
-		thisYMax *= this->follow->currentScale.y;
-		thisYMin *= this->follow->currentScale.y;
-		thisZMax *= this->follow->currentScale.z;
-		thisZMin *= this->follow->currentScale.z;
+		thisXMin = this->follow->position.x + testX - (this->x * this->follow->currentScale.x);
+		thisXMax = this->follow->position.x + testX + (this->x * this->follow->currentScale.x);
+		thisYMin = this->follow->position.y + testY - (this->y * this->follow->currentScale.y);
+		thisYMax = this->follow->position.y + testY + (this->y * this->follow->currentScale.y);
+		thisZMin = this->follow->position.z + testZ - (this->z * this->follow->currentScale.z);
+		thisZMax = this->follow->position.z + testZ + (this->z * this->follow->currentScale.z);
 	}
-	float otherXMin = other->follow->position.x - other->x;
-	float otherXMax = other->follow->position.x + other->x;
-	float otherYMin = other->follow->position.y - other->y;
-	float otherYMax = other->follow->position.y + other->y;
-	float otherZMin = other->follow->position.z - other->z;
-	float otherZMax = other->follow->position.z + other->z;
+	if (other->follow != nullptr) {
+		otherXMin = other->follow->position.x + testX - (other->x * other->follow->currentScale.x);
+		otherXMax = other->follow->position.x + testX + (other->x * other->follow->currentScale.x);
+		otherYMin = other->follow->position.y + testY - (other->y * other->follow->currentScale.y);
+		otherYMax = other->follow->position.y + testY + (other->y * other->follow->currentScale.y);
+		otherZMin = other->follow->position.z + testZ - (other->z * other->follow->currentScale.z);
+		otherZMax = other->follow->position.z + testZ + (other->z * other->follow->currentScale.z);
+	}
 
 	// X axis
 	bool xOverlap = thisXMin <= otherXMax && thisXMax >= otherXMin;
