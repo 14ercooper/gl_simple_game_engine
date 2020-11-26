@@ -167,6 +167,21 @@ bool GameEngine::render() {
 		}
 	}
 
+	// Run engine scripts
+	for (Script* s : engineScripts) {
+		s->run((void**) 0);
+	}
+
+	// Delete expired engine scripts
+	for (int i = 0; i < engineScripts.size(); i++) {
+		if (engineScripts.at(i)->getDestroy()) {
+			Script* obj = engineScripts.at(i);
+			engineScripts.erase(engineScripts.begin() + i);
+			delete obj;
+			i--; // Don't skip over any scripts
+		}
+	}
+
 	// Flush and swap buffers, trigger draw, and poll keypresses
 	glfwSwapBuffers(window);
 	glfwPollEvents();

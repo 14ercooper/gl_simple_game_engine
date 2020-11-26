@@ -5,10 +5,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <vector>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <vector>
 #include <cstdio>
 
 #include "Object.h"
@@ -17,6 +17,7 @@
 #include "Camera.h"
 #include "shaders/SecondPassShader.h"
 #include "InputSystem.h"
+#include "Script.h"
 
 class GameEngine {
 public:
@@ -71,6 +72,9 @@ private:
 
 	// Second pass shader
 	SecondPassShader* secondPassShader;
+
+	// Engine scripts
+	std::vector<Script*> engineScripts;
 };
 
 #endif

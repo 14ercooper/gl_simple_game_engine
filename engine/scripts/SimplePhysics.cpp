@@ -1,6 +1,10 @@
 
 #include "SimplePhysics.h"
 
+SimplePhysics::SimplePhysics() {
+	shouldDestroy = false;
+}
+
 void** SimplePhysics::run(void** args) {
 	// Add gravity
 	GameEngine::currentObject->velocity += glm::vec3(0.0f, -0.001f, 0.0f);

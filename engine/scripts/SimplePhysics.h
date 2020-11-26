@@ -9,6 +9,8 @@
 
 class SimplePhysics : public Script {
 public:
+	SimplePhysics();
+
 	void** run(void** args);
 
 private:
