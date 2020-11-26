@@ -5,6 +5,7 @@ GameEngine* GameEngine::engine = nullptr;
 GLFWwindow* GameEngine::engineWindow = nullptr;
 Camera* GameEngine::engineCamera = nullptr;
 ShaderProgram* GameEngine::engineShaderProgram = nullptr;
+Object* GameEngine::currentObject = nullptr;
 
 void error_callback(int error, const char* description) {
     fprintf(stderr, "[ERROR]: (%d) %s\n", error, description);
@@ -106,23 +107,30 @@ bool GameEngine::render() {
 	GameEngine::engineWindow = this->window;
 	GameEngine::engineCamera = this->camera;
 
-	// Tick physics
-	for (Object* obj : objects) {
-		obj->physicsTick();
-	}
+	// Calc collisions
+	doCollisionCalc();
 
 	// Tick control
 	for (Object* obj : objects) {
+		currentObject = obj;
 		obj->controlTick();
+	}
+
+	// Tick physics
+	for (Object* obj : objects) {
+		currentObject = obj;
+		obj->physicsTick();
 	}
 
 	// Draw
 	for (Object* obj : objects) {
+		currentObject = obj;
 		obj->draw();
 	}
 
 	// Tick post
 	for (Object* obj : objects) {
+		currentObject = obj;
 		obj->postTick();
 	}
 

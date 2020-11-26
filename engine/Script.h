@@ -4,7 +4,7 @@
 
 class Script {
 public:
-	void** run(void** args);
+	virtual void** run(void** args);
 };
 
 #endif

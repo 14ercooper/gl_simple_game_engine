@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <cstdio>
+#include <set>
+#include <string>
 
 #include "Material.h"
 #include "Script.h"
@@ -23,12 +25,14 @@ public:
 	glm::vec3 position;
 	Quaternion* rotation;
 	glm::vec3 currentScale;
+	glm::vec3 velocity; // useful for physics
 
 	void translate(glm::vec3 amount);
-	bool quarterstepTranslate(glm::vec3 amount);
+	int quarterstepTranslate(glm::vec3 amount);
 	void rotate(Quaternion* rotation);
 	void rotate(float theta, float x, float y, float z);
 	void scale(glm::vec3 amount);
+	void addVelocity(glm::vec3 amount);
 
 	void setShader(ShaderProgram* program, bool deleteOld);
 	ShaderProgram* getShader();
@@ -59,6 +63,10 @@ public:
 	void setParent(Object* newParent, bool destroyOld);
 	Object* getParent();
 
+	void addTag(std::string tag);
+	void removeTag(std::string tag);
+	bool hasTag(std::string tag);
+
 protected:
 	ShaderProgram* shaderProgram;
 
@@ -77,6 +85,8 @@ protected:
 	void** postTickData;
 
 	bool shouldDestroy;
+
+	std::set<std::string> tags;
 };
 
 // This just feels hacky

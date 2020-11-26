@@ -43,6 +43,7 @@ public:
 	static GLFWwindow* engineWindow;
 	static Camera* engineCamera;
 	static ShaderProgram* engineShaderProgram;
+	static Object* currentObject;
 
 private:
 	// The window object

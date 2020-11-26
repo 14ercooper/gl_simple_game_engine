@@ -17,6 +17,7 @@ Object::Object() {
 	position = glm::vec3(0.0f, 0.0f, 0.0f);
 	rotation = new Quaternion();
 	currentScale = glm::vec3(1.0f, 1.0f, 1.0f);
+	velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	shouldDestroy = false;
 
@@ -50,10 +51,10 @@ void Object::translate(glm::vec3 amount) {
 	position += amount;
 }
 
-bool Object::quarterstepTranslate(glm::vec3 amount) {
+int Object::quarterstepTranslate(glm::vec3 amount) {
 	if (collider == nullptr || collider->isTrigger) {
 		translate(amount);
-		return true;
+		return 4;
 	}
 	glm::vec3 quaterstep = amount * 0.25f;
 	for (int i = 0; i < 4; i++) {
@@ -61,10 +62,10 @@ bool Object::quarterstepTranslate(glm::vec3 amount) {
 			translate(quaterstep);
 		}
 		else {
-			return false;
+			return i;
 		}
 	}
-	return true;
+	return 4;
 }
 
 void Object::rotate(Quaternion* rotation) {
@@ -80,6 +81,10 @@ void Object::rotate(float theta, float x, float y, float z) {
 
 void Object::scale(glm::vec3 amount) {
 	currentScale *= amount;
+}
+
+void Object::addVelocity(glm::vec3 amount) {
+	velocity += amount;
 }
 
 void Object::setMaterial(Material* m, bool deleteOld) {
@@ -173,4 +178,16 @@ void Object::setParent(Object* newParent, bool destroyOld) {
 
 Object* Object::getParent() {
 	return parent;
+}
+
+void Object::addTag(std::string tag) {
+	tags.insert(tag);
+}
+
+void Object::removeTag(std::string tag) {
+	tags.erase(tags.find(tag));
+}
+
+bool Object::hasTag(std::string tag) {
+	return tags.count(tag) > 0;
 }
