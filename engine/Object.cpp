@@ -50,6 +50,23 @@ void Object::translate(glm::vec3 amount) {
 	position += amount;
 }
 
+bool Object::quarterstepTranslate(glm::vec3 amount) {
+	if (collider == nullptr || collider->isTrigger) {
+		translate(amount);
+		return true;
+	}
+	glm::vec3 quaterstep = amount * 0.25f;
+	for (int i = 0; i < 4; i++) {
+		if (GameEngine::engine->checkCollisions(collider, quaterstep.x, quaterstep.y, quaterstep.z).size() == 0) {
+			translate(quaterstep);
+		}
+		else {
+			return false;
+		}
+	}
+	return true;
+}
+
 void Object::rotate(Quaternion* rotation) {
 	this->rotation->hamilton(rotation);
 }

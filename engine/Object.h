@@ -25,6 +25,7 @@ public:
 	glm::vec3 currentScale;
 
 	void translate(glm::vec3 amount);
+	bool quarterstepTranslate(glm::vec3 amount);
 	void rotate(Quaternion* rotation);
 	void rotate(float theta, float x, float y, float z);
 	void scale(glm::vec3 amount);
@@ -80,5 +81,6 @@ protected:
 
 // This just feels hacky
 #include "Collider.h"
+#include "GameEngine.h"
 
 #endif
