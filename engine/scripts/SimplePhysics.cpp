@@ -7,7 +7,7 @@ void** SimplePhysics::run(void** args) {
 
 	// Clamp movement speed
 	GameEngine::currentObject->velocity.x = clamp(GameEngine::currentObject->velocity.x, -2.0f, 2.0f);
-	GameEngine::currentObject->velocity.y = clamp(GameEngine::currentObject->velocity.y, -0.1f, 2.0f);
+	GameEngine::currentObject->velocity.y = clamp(GameEngine::currentObject->velocity.y, -0.2f, 2.0f);
 	GameEngine::currentObject->velocity.z = clamp(GameEngine::currentObject->velocity.z, -2.0f, 2.0f);
 
 	// Apply vertical quaterstep movement

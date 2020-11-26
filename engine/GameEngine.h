@@ -15,6 +15,8 @@
 #include "Collider.h"
 #include "ShaderProgram.h"
 #include "Camera.h"
+#include "shaders/SecondPassShader.h"
+#include "InputSystem.h"
 
 class GameEngine {
 public:
@@ -27,6 +29,9 @@ public:
 
 	// Empty objects
 	void purgeObjects();
+
+	// Set a second pass shader
+	void setSecondPass(SecondPassShader* shader, bool destroyOld);
 
 	// Draw the game to the window in it's current state
 	// Returns: bool on if the window is still open and being drawn to
@@ -63,6 +68,9 @@ private:
 
 	// Camera
 	Camera* camera;
+
+	// Second pass shader
+	SecondPassShader* secondPassShader;
 };
 
 #endif

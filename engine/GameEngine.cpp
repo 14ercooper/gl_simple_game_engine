@@ -11,11 +11,6 @@ void error_callback(int error, const char* description) {
     fprintf(stderr, "[ERROR]: (%d) %s\n", error, description);
 }
 
-void cursor_callback( GLFWwindow* window, double xPos, double yPos ) {}
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {}
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {}
-void scroll_callback(GLFWwindow* window, double xOffset, double yOffset ) {}
-
 // Create a new engine instance
 GameEngine::GameEngine() {
 	glfwSetErrorCallback(error_callback);
@@ -45,10 +40,10 @@ GameEngine::GameEngine() {
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 
-	glfwSetKeyCallback(         window, key_callback		  );            	// set our keyboard callback function
-    glfwSetMouseButtonCallback( window, mouse_button_callback );	            // set our mouse button callback function
-    glfwSetCursorPosCallback(	window, cursor_callback  	  );	            // set our cursor position callback function
-    glfwSetScrollCallback(		window, scroll_callback		  );	            // set our scroll wheel callback function
+	glfwSetKeyCallback(         window, InputSystem::key_callback		  );            	// set our keyboard callback function
+    glfwSetMouseButtonCallback( window, InputSystem::mouse_button_callback );	            // set our mouse button callback function
+    glfwSetCursorPosCallback(	window, InputSystem::cursor_callback  	  );	            // set our cursor position callback function
+    glfwSetScrollCallback(		window, InputSystem::scroll_callback		  );	            // set our scroll wheel callback function
 
 	glewExperimental = GL_TRUE;
     GLenum glewResult = glewInit();
@@ -71,6 +66,7 @@ GameEngine::GameEngine() {
 
 	objects = std::vector<Object*>();
 	camera = new Camera();
+	secondPassShader = nullptr;
 
 	doneCollisionCalc = false;
 }
@@ -100,6 +96,12 @@ void GameEngine::purgeObjects() {
 		delete objects.at(i);
 	}
 	objects.clear();
+}
+
+void GameEngine::setSecondPass(SecondPassShader* shader, bool destroyOld) {
+	if (destroyOld && secondPassShader != nullptr)
+		delete secondPassShader;
+	secondPassShader = shader;
 }
 
 // Draw the scene to the screen
@@ -133,10 +135,20 @@ bool GameEngine::render() {
 		obj->physicsTick();
 	}
 
+	// If using second pass, use it
+	if (secondPassShader != nullptr) {
+		secondPassShader->setDrawToBuffer();
+	}
+
 	// Draw
 	for (Object* obj : objects) {
 		currentObject = obj;
 		obj->draw();
+	}
+
+	// If using second pass, draw it to the screen
+	if (secondPassShader != nullptr) {
+		secondPassShader->drawBufferToScreen();
 	}
 
 	// Tick post
@@ -161,6 +173,7 @@ bool GameEngine::render() {
 
 	// Reset the collisions flag
 	doneCollisionCalc = false;
+	InputSystem::resetDynamicInputs();
 
 	// Return that we're still drawing
 	return !glfwWindowShouldClose(window);

@@ -2,7 +2,7 @@
 #include "ColorGouradShader.h"
 
 const char* ColorGouradShader::vertexProgram =
-R"V0G0N(#version 410 core
+R"FOURTEENER(#version 410 core
 
 in vec3 vertexPosition;
 in vec3 vertexNormal;
@@ -50,10 +50,10 @@ void main() {
 	// Combine with weights
 	color = (materialDiffuse * diffuseColor) + (materialSpecularity * specularColor) + ambientColor;
 }
-)V0G0N";
+)FOURTEENER";
 
 const char* ColorGouradShader::fragmentProgram =
-R"V0G0N(#version 410 core
+R"FOURTEENER(#version 410 core
 
 in vec3 color;
 out vec4 fragColorOut;
@@ -61,7 +61,7 @@ out vec4 fragColorOut;
 void main() {
 	fragColorOut = vec4(color, 1);
 }
-)V0G0N";
+)FOURTEENER";
 
 ColorGouradShader::ColorGouradShader() {
 	GLuint vertex = compileShaderText(ColorGouradShader::vertexProgram, GL_VERTEX_SHADER);

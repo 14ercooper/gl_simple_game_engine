@@ -8,6 +8,7 @@
 #include "engine/objects/Cube.h"
 #include "engine/objects/Plane.h"
 #include "engine/scripts/SimplePhysics.h"
+#include "engine/shaders/SecondPassShader.h"
 
 int main () {
 	GameEngine *engine = new GameEngine();
@@ -22,6 +23,9 @@ int main () {
 	cube->setPhysicsTick(physics, true);
 	engine->addObject(cube);
 
+	SecondPassShader* secondPass = new SecondPassShader(1920, 1080);
+	engine->setSecondPass(secondPass, true);
+
 	PlaneObject *ground = new PlaneObject();
 	ground->translate(glm::vec3(0.0f, -3.0f, 0.0f));
 	ground->scale(glm::vec3(10.0f, 1.0f, 10.0f));
@@ -35,6 +39,8 @@ int main () {
 
 	engine->purgeObjects();
 	delete engine;
+
+	delete secondPass;
 
 	return 0;
 }
