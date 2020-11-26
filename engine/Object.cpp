@@ -19,6 +19,8 @@ Object::Object() {
 	currentScale = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	shouldDestroy = false;
+
+	parent = nullptr;
 }
 
 Object::~Object() {
@@ -137,8 +139,21 @@ bool Object::getDestroy() {
 }
 
 glm::mat4 Object::getModelMatrix() {
-	glm::mat4 matrix = glm::translate(glm::mat4(1.0f), position);
+	glm::mat4 parentMatrix = glm::mat4(1.0f);
+	if (parent != nullptr)
+		parentMatrix = parent->getModelMatrix();
+	glm::mat4 matrix = glm::translate(parentMatrix, position);
 	matrix = glm::rotate(matrix, rotation->rotationAngle(), rotation->rotationAxis());
 	matrix = glm::scale(matrix, currentScale);
 	return matrix;
+}
+
+void Object::setParent(Object* newParent, bool destroyOld) {
+	if (destroyOld && parent != nullptr)
+		delete parent;
+	parent = newParent;
+}
+
+Object* Object::getParent() {
+	return parent;
 }

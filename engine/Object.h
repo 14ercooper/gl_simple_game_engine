@@ -55,8 +55,13 @@ public:
 
 	glm::mat4 getModelMatrix();
 
+	void setParent(Object* newParent, bool destroyOld);
+	Object* getParent();
+
 protected:
 	ShaderProgram* shaderProgram;
+
+	Object* parent;
 
 	Material* material;
 	Collider* collider;

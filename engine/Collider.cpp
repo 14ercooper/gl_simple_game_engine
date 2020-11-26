@@ -98,6 +98,12 @@ bool Collider::collideHelper(Collider* other, float testX, float testY, float te
 		thisYMax = this->follow->position.y + testY + this->y;
 		thisZMin = this->follow->position.z + testZ - this->z;
 		thisZMax = this->follow->position.z + testZ + this->z;
+		thisXMax *= this->follow->currentScale.x;
+		thisXMin *= this->follow->currentScale.x;
+		thisYMax *= this->follow->currentScale.y;
+		thisYMin *= this->follow->currentScale.y;
+		thisZMax *= this->follow->currentScale.z;
+		thisZMin *= this->follow->currentScale.z;
 	}
 	float otherXMin = other->follow->position.x - other->x;
 	float otherXMax = other->follow->position.x + other->x;
