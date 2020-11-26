@@ -7,4 +7,10 @@ struct Vertex {
 	float nX, nY, nZ;
 };
 
+struct VertexTextured {
+	float x, y, z;
+	float nX, nY, nZ;
+	float u, v;	
+};
+
 #endif

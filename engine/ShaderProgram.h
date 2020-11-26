@@ -22,6 +22,7 @@ public:
 	void useProgram();
 
 	void uniformFloat(std::string pos, GLfloat value);
+	void uniformInt(std::string pos, GLint value);
 	void uniformVec3(std::string pos, glm::vec3 value);
 	void uniformMat4(std::string pos, glm::mat4 value);
 

@@ -1,11 +1,12 @@
 
-#include "ColorGouradShader.h"
+#include "TextureGouradShader.h"
 
-const char* ColorGouradShader::vertexProgram =
+const char* TextureGouradShader::vertexProgram =
 R"FOURTEENER(#version 410 core
 
 in vec3 vertexPosition;
 in vec3 vertexNormal;
+in vec2 vertexTexture;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -17,7 +18,10 @@ uniform float materialSpecularity;
 
 uniform vec3 viewingVector;
 
-out vec3 color;
+out vec2 texCoord;
+out float diffuseIntensity;
+out float specularIntensity;
+out float ambientIntensity;
 
 void main() {
 	vec4 transformedVertexPos = modelMatrix * vec4(vertexPosition, 1);
@@ -30,42 +34,50 @@ void main() {
 	vec3 sunDirection = normalize(vec3(1, 1, -1));
 
 	// Coloring
-	vec3 diffuseColor = vec3(0, 0, 0);
-	vec3 specularColor = vec3(0, 0, 0);
 	float alpha = 2;
 
 	// Calc 
-	float diffuseIntensity = dot(sunDirection, normalVector);
-	vec3 colorIntensity = materialColor * max(diffuseIntensity, 0);
-	diffuseColor = diffuseColor + colorIntensity;
+	diffuseIntensity = max(dot(sunDirection, normalVector), 0);
 
 	// Calc specular
 	vec3 reflectionVector = -sunDirection + (2 * dot(normalVector, sunDirection)) * normalVector;
-	vec3 specularIntensity = materialColor * pow(max(dot(normalViewingVector, reflectionVector), 0), alpha);
-	specularColor = specularColor + specularIntensity;
+	specularIntensity = pow(max(dot(normalViewingVector, reflectionVector), 0), alpha);
 
 	// Ambient light
-	vec3 ambientColor = vec3(0.05, 0.05, 0.05);
+	ambientIntensity = 0.05;
 
-	// Combine with weights
-	color = (materialDiffuse * diffuseColor) + (materialSpecularity * specularColor) + ambientColor;
+	// Texture
+	texCoord = vertexTexture;
 }
 )FOURTEENER";
 
-const char* ColorGouradShader::fragmentProgram =
+const char* TextureGouradShader::fragmentProgram =
 R"FOURTEENER(#version 410 core
 
-in vec3 color;
+uniform sampler2D tex;
+
+in vec2 texCoord;
+in float diffuseIntensity;
+in float specularIntensity;
+in float ambientIntensity;
+
 out vec4 fragColorOut;
 
 void main() {
-	fragColorOut = vec4(color, 1);
+	vec4 texel = texture(tex, texCoord);
+	float texA = texel.a;
+
+	texel = (texel * diffuseIntensity) + (texel * specularIntensity) + (texel * ambientIntensity);
+
+	texel.a = texA;
+
+	fragColorOut = texel;
 }
 )FOURTEENER";
 
-ColorGouradShader::ColorGouradShader() {
-	GLuint vertex = compileShaderText(ColorGouradShader::vertexProgram, GL_VERTEX_SHADER);
-	GLuint fragment = compileShaderText(ColorGouradShader::fragmentProgram, GL_FRAGMENT_SHADER);
+TextureGouradShader::TextureGouradShader() {
+	GLuint vertex = compileShaderText(TextureGouradShader::vertexProgram, GL_VERTEX_SHADER);
+	GLuint fragment = compileShaderText(TextureGouradShader::fragmentProgram, GL_FRAGMENT_SHADER);
 
 	programHandle = glCreateProgram();
 
@@ -83,19 +95,24 @@ ColorGouradShader::ColorGouradShader() {
 	glDeleteShader(fragment);
 
 	glUseProgram(programHandle);
+
+	glUniform1i(getUniformLocation("tex"), 0);
 }
 
-void ColorGouradShader::enableAttribs() {
+void TextureGouradShader::enableAttribs() {
 	useProgram();
 
 	// Enable attributes
 	GLuint vertexPosAttr = getAttributeLocation("vertexPosition");
 	GLuint vertexNormalAttr = getAttributeLocation("vertexNormal");
+	GLuint vertexTextureAttr = getAttributeLocation("vertexTexture");
 
 	glEnableVertexAttribArray(vertexPosAttr);
-	glVertexAttribPointer(vertexPosAttr, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*) 0);
+	glVertexAttribPointer(vertexPosAttr, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*) 0);
 
 	glEnableVertexAttribArray(vertexNormalAttr);
-	glVertexAttribPointer(vertexNormalAttr, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
-}
+	glVertexAttribPointer(vertexNormalAttr, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
 
+	glEnableVertexAttribArray(vertexTextureAttr);
+	glVertexAttribPointer(vertexTextureAttr, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
+}

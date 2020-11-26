@@ -74,6 +74,11 @@ void ShaderProgram::useProgram() {
 	glUseProgram(programHandle);
 }
 
+void ShaderProgram::uniformInt(std::string pos, GLint value) {
+	useProgram();
+	glUniform1iv(getUniformLocation(pos), 1, &value);
+}
+
 void ShaderProgram::uniformFloat(std::string pos, GLfloat value) {
 	useProgram();
 	glUniform1fv(getUniformLocation(pos), 1, &value);
