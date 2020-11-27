@@ -9,15 +9,21 @@
 #include "engine/math/Quaternion.h"
 #include "engine/objects/Cube.h"
 #include "engine/objects/TexturedPlane.h"
+#include "engine/objects/ParticleSystem.h"
 #include "engine/scripts/SimplePhysics.h"
 #include "engine/scripts/CloseOnEscape.h"
 #include "engine/shaders/SecondPassShader.h"
 #include "engine/shaders/SkyboxShader.h"
 
+// Get rand [-1..1]
+double getRand() { return (2.0*(rand() / (double)RAND_MAX)) - 1; }
+
 int main () {
+	// Create a new game engine and full screen the window
 	GameEngine *engine = new GameEngine();
 	engine->setWindowSize(-1, -1);
 
+	// Add a skybox
 	std::vector<std::string> skyTextures = {"textures/skybox/px.png",
 			"textures/skybox/nx.png", "textures/skybox/py.png",
 			"textures/skybox/ny.png", "textures/skybox/pz.png",
@@ -25,37 +31,57 @@ int main () {
 	SkyboxShader* skybox = new SkyboxShader(skyTextures);
 	engine->setSkyboxShader(skybox, true);
 
+	// Make the window close when we press escape
 	CloseOnEscape* closeScript = new CloseOnEscape();
 	engine->addScript(closeScript);
 	
+	// This can be used to rotate the cube
 	Quaternion *rotateCube = new Quaternion();
 	rotateCube->euler(0.01f, 1, 2, 1);
 
+	// Add a cube object
 	CubeObject *cube = new CubeObject();
 	cube->translate(glm::vec3(-2.0f, 3.0f, 0.0f));
 	Script* physics = new SimplePhysics();
 	cube->setPhysicsTick(physics, true);
 	engine->addObject(cube);
 
+	// Create a particle system
+	ParticleSystem* particles = new ParticleSystem("textures/particle.png", 0.0f);
+	engine->addObject(particles);
+
+	// Turn on 2 pass rendering
 	SecondPassShader* secondPass = new SecondPassShader(1920, 1080);
 	engine->setSecondPass(secondPass, true);
 
+	// Add a ground
 	TexturedPlaneObject *ground = new TexturedPlaneObject("textures/ground.png");
 	ground->translate(glm::vec3(0.0f, -3.0f, 0.0f));
 	ground->scale(glm::vec3(10.0f, 1.0f, 10.0f));
 	engine->addObject(ground);
 
+	// Render
 	while (engine->render()) {
+		// Apply the rotation to the cube
 		cube->rotation->hamilton(rotateCube);
+
+		// Spawn particles
+		if (particles->size() < 10)
+			if (getRand() < -0.75)
+				particles->addParticle(10 * getRand(), 10 * getRand(), 10 * getRand(),
+					0.05 * getRand(), 0.05 * getRand(), 0.05 * getRand(), 200);
 	}
 
+	// Clean up the engine
 	engine->purgeObjects();
 	delete engine;
 
+	// Clean up the other stuff
 	delete secondPass;
 	delete skybox;
 	delete rotateCube;
 	delete closeScript;
 
+	// Return successfully
 	return 0;
 }
