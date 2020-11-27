@@ -14,6 +14,8 @@ public:
 	ShaderProgram();
 	ShaderProgram(std::string vertexShader, std::string fragmentShader);
 	ShaderProgram(std::string vertexShader, std::string geometryShader, std::string fragmentShader);
+	ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string fragmentShader);
+	ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string geometryShader, std::string fragmentShader);
 	~ShaderProgram();
 
 	GLuint getUniformLocation(std::string name);

@@ -50,6 +50,66 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string geometryShade
 	glDeleteShader(fragment);
 }
 
+ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string fragmentShader) {
+	GLuint vertex = compileShader(vertexShader.c_str(), GL_VERTEX_SHADER);
+	GLuint tessControl = compileShader(tessControlShader.c_str(), GL_TESS_CONTROL_SHADER);
+	GLuint tessEval = compileShader(tessEvalShader.c_str(), GL_TESS_EVALUATION_SHADER);
+	GLuint fragment = compileShader(fragmentShader.c_str(), GL_FRAGMENT_SHADER);
+
+	programHandle = glCreateProgram();
+
+	glAttachShader(programHandle, vertex);
+	glAttachShader(programHandle, tessControl);
+	glAttachShader(programHandle, tessEval);
+	glAttachShader(programHandle, fragment);
+
+	glLinkProgram(programHandle);
+
+	printLog(programHandle);
+
+	glDetachShader(programHandle, vertex);
+	glDetachShader(programHandle, tessControl);
+	glDetachShader(programHandle, tessEval);
+	glDetachShader(programHandle, fragment);
+
+	glDeleteShader(vertex);
+	glDeleteShader(tessControl);
+	glDeleteShader(tessEval);
+	glDeleteShader(fragment);
+}
+
+ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string geometryShader, std::string fragmentShader) {
+	GLuint vertex = compileShader(vertexShader.c_str(), GL_VERTEX_SHADER);
+	GLuint tessControl = compileShader(tessControlShader.c_str(), GL_TESS_CONTROL_SHADER);
+	GLuint tessEval = compileShader(tessEvalShader.c_str(), GL_TESS_EVALUATION_SHADER);
+	GLuint geometry = compileShader(geometryShader.c_str(), GL_GEOMETRY_SHADER);
+	GLuint fragment = compileShader(fragmentShader.c_str(), GL_FRAGMENT_SHADER);
+
+	programHandle = glCreateProgram();
+
+	glAttachShader(programHandle, vertex);
+	glAttachShader(programHandle, tessControl);
+	glAttachShader(programHandle, tessEval);
+	glAttachShader(programHandle, geometry);
+	glAttachShader(programHandle, fragment);
+
+	glLinkProgram(programHandle);
+
+	printLog(programHandle);
+
+	glDetachShader(programHandle, vertex);
+	glDetachShader(programHandle, tessControl);
+	glDetachShader(programHandle, tessEval);
+	glDetachShader(programHandle, geometry);
+	glDetachShader(programHandle, fragment);
+
+	glDeleteShader(vertex);
+	glDeleteShader(tessControl);
+	glDeleteShader(tessEval);
+	glDeleteShader(geometry);
+	glDeleteShader(fragment);
+}
+
 ShaderProgram::~ShaderProgram() {
 	if (programHandle == -1)
 		return;
