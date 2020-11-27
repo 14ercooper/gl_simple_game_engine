@@ -112,6 +112,12 @@ void GameEngine::setSkyboxShader(SkyboxShader* shader, bool destroyOld) {
 	skyboxShader = shader;
 }
 
+void GameEngine::setCamera(Camera* cam, bool destroyOld) {
+	if (destroyOld)
+		delete camera;
+	camera = cam;
+}
+
 // Draw the scene to the screen
 bool GameEngine::render() {
     glDrawBuffer( GL_BACK );				        // work with our back frame buffer
@@ -130,6 +136,9 @@ bool GameEngine::render() {
 
 	// Calc collisions
 	doCollisionCalc();
+
+	// Update camera
+	camera->update();
 
 	// Tick control
 	for (Object* obj : objects) {
@@ -195,12 +204,12 @@ bool GameEngine::render() {
 	}
 
 	// Flush and swap buffers, trigger draw, and poll keypresses
+	InputSystem::resetDynamicInputs();
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
 	// Reset the collisions flag
 	doneCollisionCalc = false;
-	InputSystem::resetDynamicInputs();
 
 	// Return that we're still drawing
 	return !glfwWindowShouldClose(window);

@@ -2,13 +2,13 @@
 #include "InputSystem.h"
 
 void InputSystem::cursor_callback( GLFWwindow* window, double xPos, double yPos ) {
-	if (mouseX = -99999) {
+	if (mouseX == -99999) {
 		// No cursor flipout
 		mouseX = xPos;
 		mouseY = yPos;
 	}
 
-	mouseAccel = glm::vec2(xPos - mouseX, yPos - mouseY);
+	mouseAccel += glm::vec2(xPos - mouseX, yPos - mouseY);
 
 	mouseX = xPos;
 	mouseY = yPos;

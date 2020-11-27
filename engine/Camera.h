@@ -7,6 +7,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <cstdio>
+
+class Camera; // Gotta love mutually dependent classes
+
+#include "InputSystem.h"
+#include "Object.h"
+
 class Camera {
 public:
 	Camera();
@@ -18,6 +25,16 @@ public:
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix(GLFWwindow* window);
 	glm::vec3 getViewingVector();
+
+	void setFollow(Object* obj, bool destroyOld);
+
+	virtual void update();
+
+protected:
+	Object* follow;
+
+private:
+	float arcVert, arcRot, arcDist;
 };
 
 #endif

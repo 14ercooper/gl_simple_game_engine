@@ -36,6 +36,9 @@ public:
 	void setSecondPass(SecondPassShader* shader, bool destroyOld);
 	void setSkyboxShader(SkyboxShader* shader, bool destroyOld);
 
+	// Set the camera
+	void setCamera(Camera* cam, bool destroyOld);
+
 	// Draw the game to the window in it's current state
 	// Returns: bool on if the window is still open and being drawn to
 	bool render();
