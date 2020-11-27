@@ -22,6 +22,7 @@ int main () {
 	// Create a new game engine and full screen the window
 	GameEngine *engine = new GameEngine();
 	engine->setWindowSize(-1, -1);
+	engine->renameWindow("Spinning Cube");
 
 	// Add a skybox
 	std::vector<std::string> skyTextures = {"textures/skybox/px.png",

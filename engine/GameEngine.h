@@ -31,6 +31,9 @@ public:
 	// Set the window size. If either are < 1, full screen
 	void setWindowSize(int width, int height);
 
+	// Rename the window (aka set the title)
+	void renameWindow(const char* name);
+
 	// Empty objects
 	void purgeObjects();
 
@@ -45,6 +48,10 @@ public:
 	// Returns: bool on if the window is still open and being drawn to
 	// true = window still open, keep drawing
 	bool render();
+
+	// Only draw objects (useful for multi-camera)
+	// Also applies the second pass shader
+	void renderNoUpdate();
 
 	// Add an object or script to the game
 	void addObject(Object* o);

@@ -93,6 +93,10 @@ void GameEngine::setWindowSize(int width, int height) {
 	}
 }
 
+void GameEngine::renameWindow(const char* name) {
+	glfwSetWindowTitle(window, name);
+}
+
 void GameEngine::purgeObjects() {
 	for (Object* obj : objects) {
 		delete obj;
@@ -213,6 +217,28 @@ bool GameEngine::render() {
 
 	// Return that we're still drawing
 	return !glfwWindowShouldClose(window);
+}
+
+void GameEngine::renderNoUpdate() {
+	// If using second pass, use it
+	if (secondPassShader != nullptr) {
+		secondPassShader->setDrawToBuffer();
+	}
+
+	// If we have a skybox, draw it
+	if (skyboxShader != nullptr)
+		skyboxShader->drawSkybox();
+
+	// Draw
+	for (Object* obj : objects) {
+		currentObject = obj;
+		obj->draw();
+	}
+
+	// If using second pass, draw it to the screen
+	if (secondPassShader != nullptr) {
+		secondPassShader->drawBufferToScreen();
+	}
 }
 
 void GameEngine::addObject(Object* o) {
