@@ -19,6 +19,10 @@ void TexturedPlaneObject::draw() {
 	shaderProgram->uniformMat4("projectionMatrix", GameEngine::engineCamera->getProjectionMatrix(GameEngine::engineWindow));
 	shaderProgram->uniformVec3("viewingVector", GameEngine::engineCamera->getViewingVector());
 
+	// Material diffuse and spec
+	shaderProgram->uniformFloat("materialDiffuse", 1.0f);
+	shaderProgram->uniformFloat("materialSpecularity", 0.05f);
+
 	// Bind texture
 	glBindTexture(GL_TEXTURE_2D, textureHandle);
 

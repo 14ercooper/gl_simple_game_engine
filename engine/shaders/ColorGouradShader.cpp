@@ -36,12 +36,12 @@ void main() {
 
 	// Calc 
 	float diffuseIntensity = dot(sunDirection, normalVector);
-	vec3 colorIntensity = materialColor * max(diffuseIntensity, 0);
+	vec3 colorIntensity = materialColor * clamp(diffuseIntensity, 0, 1);
 	diffuseColor = diffuseColor + colorIntensity;
 
 	// Calc specular
 	vec3 reflectionVector = -sunDirection + (2 * dot(normalVector, sunDirection)) * normalVector;
-	vec3 specularIntensity = materialColor * pow(max(dot(normalViewingVector, reflectionVector), 0), alpha);
+	vec3 specularIntensity = materialColor * clamp(pow(max(dot(normalViewingVector, reflectionVector), 0), alpha), 0, 1);
 	specularColor = specularColor + specularIntensity;
 
 	// Ambient light

@@ -12,7 +12,6 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
-uniform vec3 materialColor;
 uniform float materialDiffuse;
 uniform float materialSpecularity;
 
@@ -37,11 +36,11 @@ void main() {
 	float alpha = 2;
 
 	// Calc 
-	diffuseIntensity = max(dot(sunDirection, normalVector), 0);
+	diffuseIntensity = clamp(dot(sunDirection, normalVector), 0, 1) * materialDiffuse;
 
 	// Calc specular
 	vec3 reflectionVector = -sunDirection + (2 * dot(normalVector, sunDirection)) * normalVector;
-	specularIntensity = pow(max(dot(normalViewingVector, reflectionVector), 0), alpha);
+	specularIntensity = clamp(pow(max(dot(normalViewingVector, reflectionVector), 0), alpha), 0, 1) * materialSpecularity;
 
 	// Ambient light
 	ambientIntensity = 0.05;
