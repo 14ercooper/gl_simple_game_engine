@@ -32,10 +32,13 @@ void Quaternion::euler(float theta, float x, float y, float z) {
 	this->z = z*halfSin;
 }
 
-void Quaternion::invert() {
-	x *= -1.0f;
-	y *= -1.0f;
-	z *= -1.0f;
+Quaternion* Quaternion::invert() {
+	Quaternion* quat = new Quaternion();
+	quat->w = w;
+	quat->x = x * -1.0f;
+	quat->y = y * -1.0f;
+	quat->z = z * -1.0f;
+	return quat;
 }
 
 void Quaternion::normalize() {

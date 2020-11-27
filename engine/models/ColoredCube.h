@@ -8,6 +8,7 @@
 #include "../Vertex.h"
 #include "../GameEngine.h"
 
+// A cube that can be colored with a material
 class ColoredCube : public Model {
 public:
 	void draw();

@@ -9,6 +9,7 @@
 #include "../InputSystem.h"
 #include "../GameEngine.h"
 
+// Engine script that closes the window when the escape key is pressed
 class CloseOnEscape : public Script {
 public:
 	CloseOnEscape();

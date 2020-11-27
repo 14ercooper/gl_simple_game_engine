@@ -10,6 +10,7 @@
 
 #include "../ShaderProgram.h"
 
+// A shader to draw a skybox using a cubemap
 class SkyboxShader : public ShaderProgram {
 public:
 	// Order: px nx py ny pz nz

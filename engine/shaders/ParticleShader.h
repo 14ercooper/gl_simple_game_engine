@@ -8,6 +8,7 @@
 #include "../ShaderProgram.h"
 #include "../TextureUtils.h"
 
+// A billboarding particle shader with transparency support
 class ParticleShader : public ShaderProgram {
 public:
 	ParticleShader(std::string texture);

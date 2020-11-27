@@ -4,6 +4,7 @@
 
 #include "../Material.h"
 
+// Light green matte material
 class MatteLightGreen : public Material {
 public:
 	MatteLightGreen();

@@ -20,6 +20,8 @@
 #include "InputSystem.h"
 #include "Script.h"
 
+// This is the heart of the engine. It consists of the central gameplay loop, as well as
+// managing the window, tracking objects, etc. This is the "game"
 class GameEngine {
 public:
 	// Create a new game engine instance. This creates a window for the game.
@@ -41,6 +43,7 @@ public:
 
 	// Draw the game to the window in it's current state
 	// Returns: bool on if the window is still open and being drawn to
+	// true = window still open, keep drawing
 	bool render();
 
 	// Add an object or script to the game

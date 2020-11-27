@@ -11,6 +11,7 @@
 #include "../Collider.h"
 #include "../TextureUtils.h"
 
+// A textured plane object. Draws with the given texture.
 class TexturedPlaneObject : public Object {
 public:
 	TexturedPlaneObject(std::string filename);

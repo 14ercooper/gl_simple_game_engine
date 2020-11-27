@@ -8,6 +8,7 @@
 #include "../ShaderProgram.h"
 #include "../GameEngine.h"
 
+// A gourad shader that colors based on the object's material
 class ColorGouradShader : public ShaderProgram {
 public:
 	ColorGouradShader();

@@ -8,6 +8,7 @@
 #include "../Vertex.h"
 #include "../GameEngine.h"
 
+// A textured plane model
 class PlaneTexturedModel : public Model {
 public:
 	void draw();

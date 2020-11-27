@@ -6,6 +6,7 @@
 
 #include "../ShaderProgram.h"
 
+// A passthrough second pass shader, able to be extended to implement other functionalities on a second pass
 class SecondPassShader : public ShaderProgram {
 public:
 	SecondPassShader(int fboWidth, int fboHeight);

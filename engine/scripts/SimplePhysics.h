@@ -7,6 +7,7 @@
 #include "../GameEngine.h"
 #include "../Script.h"
 
+// Simple physics that applies gravity and moves the object, checking for collisions
 class SimplePhysics : public Script {
 public:
 	SimplePhysics();

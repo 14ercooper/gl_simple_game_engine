@@ -9,6 +9,7 @@
 #include "../GameEngine.h"
 #include "../Collider.h"
 
+// A colored cube object. Default material is matte sky blue.
 class CubeObject : public Object {
 public:
 	CubeObject();

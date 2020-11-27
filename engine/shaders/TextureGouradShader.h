@@ -8,6 +8,7 @@
 #include "../ShaderProgram.h"
 #include "../GameEngine.h"
 
+// A gourad shader that gets color information from the currently bound texture
 class TextureGouradShader : public ShaderProgram {
 public:
 	TextureGouradShader();

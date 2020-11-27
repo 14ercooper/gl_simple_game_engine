@@ -9,6 +9,7 @@
 #include "../GameEngine.h"
 #include "../Collider.h"
 
+// A plane object, colored with a material. Default material is matte light green.
 class PlaneObject : public Object {
 public:
 	PlaneObject();

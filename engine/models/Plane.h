@@ -8,6 +8,7 @@
 #include "../Vertex.h"
 #include "../GameEngine.h"
 
+// A flat plane model
 class PlaneModel : public Model {
 public:
 	void draw();
