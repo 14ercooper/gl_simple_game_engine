@@ -20,10 +20,14 @@ void** SimplePhysics::run(void** args) {
 	// Apply horizontal quaterstep movement
 	int hStepsDone = GameEngine::currentObject->quarterstepTranslate(glm::vec3(GameEngine::currentObject->velocity.x, 0.0f, GameEngine::currentObject->velocity.z));
 
-	// Reduce speed if we hit something
-	GameEngine::currentObject->velocity.x *= (float) hStepsDone / 4.0f;
-	GameEngine::currentObject->velocity.y *= (float) vStepsDone / 4.0f;
-	GameEngine::currentObject->velocity.z *= (float) hStepsDone / 4.0f;
+	// Stop if we hit something
+	if (hStepsDone != 4) {
+		GameEngine::currentObject->velocity.x = 0.0f;
+		GameEngine::currentObject->velocity.z = 0.0f;
+	}
+	if (vStepsDone != 4) {
+		GameEngine::currentObject->velocity.y = 0.0f;
+	}
 
 	return (void**) 0;
 }

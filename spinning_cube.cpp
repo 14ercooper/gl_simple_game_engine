@@ -39,12 +39,22 @@ int main () {
 	Quaternion *rotateCube = new Quaternion();
 	rotateCube->euler(0.01f, 1, 2, 1);
 
-	// Add a cube object
+	// Add 3 cube objects
 	CubeObject *cube = new CubeObject();
-	cube->translate(glm::vec3(-2.0f, 3.0f, 0.0f));
+	cube->translate(glm::vec3(0.0f, 20.0f, 0.0f));
 	Script* physics = new SimplePhysics();
 	cube->setPhysicsTick(physics, true);
 	engine->addObject(cube);
+
+	CubeObject *cube2 = new CubeObject();
+	cube2->translate(glm::vec3(0.0f, 20.0f, -5.0f));
+	cube2->setPhysicsTick(physics, true);
+	engine->addObject(cube2);
+
+	CubeObject *cube3 = new CubeObject();
+	cube3->translate(glm::vec3(0.0f, 20.0f, 5.0f));
+	cube3->setPhysicsTick(physics, true);
+	engine->addObject(cube3);
 
 	// Create a particle system
 	ParticleSystem* particles = new ParticleSystem("textures/particle.png", 0.0f);
@@ -58,12 +68,22 @@ int main () {
 	TexturedPlaneObject *ground = new TexturedPlaneObject("textures/ground.png");
 	ground->translate(glm::vec3(0.0f, -3.0f, 0.0f));
 	ground->scale(glm::vec3(10.0f, 1.0f, 10.0f));
+
+	Quaternion* groundRot = new Quaternion();
+	groundRot->euler(-0.5f, 1, 0, 0);
+	ground->rotation->hamilton(groundRot);
+	ground->getCollider()->trackParentRotation = true;
+	ground->getCollider()->recalcTransforms();
+	delete groundRot;
+
 	engine->addObject(ground);
 
 	// Render
 	while (engine->render()) {
 		// Apply the rotation to the cube
 		cube->rotation->hamilton(rotateCube);
+		cube2->rotation->hamilton(rotateCube);
+		cube3->rotation->hamilton(rotateCube);
 
 		// Spawn particles
 		if (particles->size() < 10)

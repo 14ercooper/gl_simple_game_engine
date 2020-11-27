@@ -94,9 +94,6 @@ void GameEngine::setWindowSize(int width, int height) {
 }
 
 void GameEngine::purgeObjects() {
-	for (int i = 0; i < objects.size(); i++) {
-		delete objects.at(i);
-	}
 	objects.clear();
 }
 
@@ -295,6 +292,7 @@ void GameEngine::doCollisionCalc() {
 			triggers.push_back(objects.at(i));
 		else
 			colliders.push_back(objects.at(i));
+		objects.at(i)->getCollider()->recalcTransforms();
 	}
 
 	doneCollisionCalc = true;

@@ -5,7 +5,7 @@ TexturedPlaneObject::TexturedPlaneObject(std::string filename) {
 	shaderProgram = new TextureGouradShader();
 	model = new PlaneTexturedModel();
 	setCollider(new Collider(this), false);
-	scale(glm::vec3(1.0f, 0.0001f, 1.0f));
+	scale(glm::vec3(1.0f, 0.1f, 1.0f));
 	textureHandle = TextureUtils::loadAndRegisterTexture(filename.c_str());
 }
 

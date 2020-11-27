@@ -6,7 +6,7 @@ PlaneObject::PlaneObject () {
 	material = new MatteLightGreen();
 	model = new PlaneModel();
 	setCollider(new Collider(this), false);
-	scale(glm::vec3(1.0f, 0.0001f, 1.0f));
+	scale(glm::vec3(1.0f, 0.1f, 1.0f));
 }
 
 void PlaneObject::draw() {
