@@ -16,6 +16,7 @@
 #include "ShaderProgram.h"
 #include "Camera.h"
 #include "shaders/SecondPassShader.h"
+#include "shaders/SkyboxShader.h"
 #include "InputSystem.h"
 #include "Script.h"
 
@@ -31,8 +32,9 @@ public:
 	// Empty objects
 	void purgeObjects();
 
-	// Set a second pass shader
+	// Set a second pass shader or skybox shader
 	void setSecondPass(SecondPassShader* shader, bool destroyOld);
+	void setSkyboxShader(SkyboxShader* shader, bool destroyOld);
 
 	// Draw the game to the window in it's current state
 	// Returns: bool on if the window is still open and being drawn to
@@ -71,8 +73,9 @@ private:
 	// Camera
 	Camera* camera;
 
-	// Second pass shader
+	// Second pass shader and skybox shader
 	SecondPassShader* secondPassShader;
+	SkyboxShader* skyboxShader;
 
 	// Engine scripts
 	std::vector<Script*> engineScripts;

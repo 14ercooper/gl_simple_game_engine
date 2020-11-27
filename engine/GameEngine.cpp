@@ -66,7 +66,9 @@ GameEngine::GameEngine() {
 
 	objects = std::vector<Object*>();
 	camera = new Camera();
+
 	secondPassShader = nullptr;
+	skyboxShader = nullptr;
 
 	doneCollisionCalc = false;
 }
@@ -104,6 +106,12 @@ void GameEngine::setSecondPass(SecondPassShader* shader, bool destroyOld) {
 	secondPassShader = shader;
 }
 
+void GameEngine::setSkyboxShader(SkyboxShader* shader, bool destroyOld) {
+	if (destroyOld && skyboxShader != nullptr)
+		delete skyboxShader;
+	skyboxShader = shader;
+}
+
 // Draw the scene to the screen
 bool GameEngine::render() {
     glDrawBuffer( GL_BACK );				        // work with our back frame buffer
@@ -139,6 +147,10 @@ bool GameEngine::render() {
 	if (secondPassShader != nullptr) {
 		secondPassShader->setDrawToBuffer();
 	}
+
+	// If we have a skybox, draw it
+	if (skyboxShader != nullptr)
+		skyboxShader->drawSkybox();
 
 	// Draw
 	for (Object* obj : objects) {

@@ -1,5 +1,7 @@
 
 #include <glm/glm.hpp>
+#include <vector>
+#include <string>
 
 #include <cstdio>
 
@@ -10,10 +12,18 @@
 #include "engine/scripts/SimplePhysics.h"
 #include "engine/scripts/CloseOnEscape.h"
 #include "engine/shaders/SecondPassShader.h"
+#include "engine/shaders/SkyboxShader.h"
 
 int main () {
 	GameEngine *engine = new GameEngine();
 	engine->setWindowSize(-1, -1);
+
+	std::vector<std::string> skyTextures = {"textures/skybox/px.png",
+			"textures/skybox/nx.png", "textures/skybox/py.png",
+			"textures/skybox/ny.png", "textures/skybox/pz.png",
+			"textures/skybox/nz.png"};
+	SkyboxShader* skybox = new SkyboxShader(skyTextures);
+	engine->setSkyboxShader(skybox, true);
 
 	CloseOnEscape* closeScript = new CloseOnEscape();
 	engine->addScript(closeScript);
@@ -39,13 +49,13 @@ int main () {
 		cube->rotation->hamilton(rotateCube);
 	}
 
-	delete rotateCube;
-	delete closeScript;
-
 	engine->purgeObjects();
 	delete engine;
 
 	delete secondPass;
+	delete skybox;
+	delete rotateCube;
+	delete closeScript;
 
 	return 0;
 }
