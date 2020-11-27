@@ -94,7 +94,10 @@ void GameEngine::setWindowSize(int width, int height) {
 }
 
 void GameEngine::purgeObjects() {
-	objects.clear();
+	for (Object* obj : objects) {
+		delete obj;
+	}
+	objects.erase(objects.begin(), objects.begin() + objects.size());
 }
 
 void GameEngine::setSecondPass(SecondPassShader* shader, bool destroyOld) {
