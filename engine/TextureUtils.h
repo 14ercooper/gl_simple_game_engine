@@ -7,6 +7,6 @@
 
 namespace TextureUtils {
 	GLuint loadAndRegisterTexture(const char* filename);
-};
+}
 
 #endif

@@ -130,8 +130,7 @@ void ShaderProgram::printLog( GLuint handle ) {
 	}
 
 	// create a buffer of designated length
-	char infoLog[maxLength];
-
+	char* infoLog = (char*) malloc(sizeof(char) * maxLength);
 
 	if( isShader ) {
 		// get the info log for the shader
@@ -146,6 +145,8 @@ void ShaderProgram::printLog( GLuint handle ) {
 		// print info to terminal
 		printf( "[INFO]: %s Handle %d: %s\n", (isShader ? "Shader" : "Program"), handle, infoLog );
 	}
+
+	delete infoLog;
 }
 
 GLuint ShaderProgram::compileShader( const char* filename, GLenum shaderType ) {

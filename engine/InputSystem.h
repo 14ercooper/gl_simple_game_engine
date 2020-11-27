@@ -22,6 +22,6 @@ namespace InputSystem {
 	static bool mouse[GLFW_MOUSE_BUTTON_LAST];
 	static double mouseX = -99999, mouseY = -99999;
 	static glm::vec2 mouseAccel = glm::vec2(0, 0), scrollOffset = glm::vec2(0, 0);
-};
+}
 
 #endif
