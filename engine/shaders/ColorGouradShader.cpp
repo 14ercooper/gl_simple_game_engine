@@ -45,7 +45,7 @@ void main() {
 	specularColor = specularColor + specularIntensity;
 
 	// Ambient light
-	vec3 ambientColor = vec3(0.05, 0.05, 0.05);
+	vec3 ambientColor = 0.05 * materialColor;
 
 	// Combine with weights
 	color = (materialDiffuse * diffuseColor) + (materialSpecularity * specularColor) + ambientColor;
