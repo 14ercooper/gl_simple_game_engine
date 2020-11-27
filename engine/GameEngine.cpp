@@ -85,7 +85,7 @@ GameEngine::~GameEngine() {
 void GameEngine::setWindowSize(int width, int height) {
 	if (width < 1 || height < 1) {
 		// Full screen
-		glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 19200, 10800, GLFW_DONT_CARE);
+		glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 19200, 10800, 60);
 	}
 	else {
 		// Windowed
@@ -274,6 +274,38 @@ std::vector<Object*> GameEngine::checkTriggers(Collider* c, float testX, float t
 	}
 
 	return collisionsFound;
+}
+
+Object* GameEngine::raycast(glm::vec3 origin, glm::vec3 direction, float distance, float step, Collider* ignore, bool hitTrigger) {
+	direction = glm::normalize(direction);
+	float distanceGone = 0.0f;
+
+	// Check each step
+	while (distanceGone <= distance) {
+		glm::vec3 point = origin + (direction * distanceGone);
+
+		// At each step, check each collider (first hit is returned unless matches ignore collider)
+		if (hitTrigger) {
+			for (Object* obj : triggers) {
+				if (obj->getCollider()->pointInCollider(point)) {
+					if (ignore != obj->getCollider())
+						return obj;
+				}
+			}
+		}
+		else {
+			for (Object* obj : colliders) {
+				if (obj->getCollider()->pointInCollider(point)) {
+					if (ignore != obj->getCollider())
+						return obj;
+				}
+			}
+		}
+
+		distanceGone += step;
+	}
+
+	return nullptr;
 }
 
 void GameEngine::doCollisionCalc() {

@@ -100,6 +100,11 @@ bool Collider::isTriggered(Collider* other, float testX, float testY, float test
 	return collideHelper(other, testX, testY, testZ);
 }
 
+bool Collider::pointInCollider(glm::vec3 point) {
+	CollisionPoint pt = {point.x, point.y, point.z};
+	return pointInBox(this->toWorldSpace, pt);
+}
+
 void Collider::recalcTransforms() {
 	fromWorldSpace = glm::mat4(1.0f);
 	if (follow != nullptr) {
@@ -150,8 +155,7 @@ bool Collider::pointInBox(glm::mat4 spaceToSpaceTransform, CollisionPoint point)
 	glm::vec4 pt = glm::vec4(point.x, point.y, point.z, 1.0f);
 	pt = spaceToSpaceTransform * pt;
 	glm::vec3 outPt = glm::vec3(pt) / pt.w;
-	bool val = inMiddleRange(outPt.x) && inMiddleRange(outPt.y) && inMiddleRange(outPt.z);
-	return val;
+	return inMiddleRange(outPt.x) && inMiddleRange(outPt.y) && inMiddleRange(outPt.z);
 }
 
 bool Collider::inMiddleRange(float val) {

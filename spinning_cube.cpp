@@ -90,6 +90,10 @@ int main () {
 			if (getRand() < -0.75)
 				particles->addParticle(10 * getRand(), 10 * getRand(), 10 * getRand(),
 					0.05 * getRand(), 0.05 * getRand(), 0.05 * getRand(), 200);
+
+		if (engine->raycast(glm::vec3(3, 8, 3), glm::vec3(0, -1, 0), 20, 0.01, nullptr, false) != nullptr) {
+			// This raycast hit a collisder
+		}
 	}
 
 	// Clean up the engine

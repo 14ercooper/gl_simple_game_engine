@@ -53,6 +53,11 @@ public:
 	std::vector<Object*> checkCollisions(Collider* c, float testX, float testY, float testZ);
 	std::vector<Object*> checkTriggers(Collider* c, float testX, float testY, float testZ);
 
+	// Raycast from origin toward direction for distance with step
+	// Optionally ignore a collider (e.g. don't hit self),
+	// and can either hit triggers or colliders with the toggle (but not both)
+	Object* raycast(glm::vec3 origin, glm::vec3 direction, float distance, float step, Collider* ignore, bool hitTrigger);
+
 	// Statics to be accessed and used in objects
 	static GameEngine* engine;
 	static GLFWwindow* engineWindow;

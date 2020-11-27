@@ -31,6 +31,8 @@ public:
 	bool isColliding(Collider* other, float testX, float testY, float testZ);
 	bool isTriggered(Collider* other, float testX, float testY, float testZ);
 
+	bool pointInCollider(glm::vec3 point);
+
 	void recalcTransforms();
 
 	glm::mat4 fromWorldSpace;
