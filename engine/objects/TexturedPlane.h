@@ -15,6 +15,7 @@
 class TexturedPlaneObject : public Object {
 public:
 	TexturedPlaneObject(std::string filename);
+	~TexturedPlaneObject();
 
 	void draw();
 

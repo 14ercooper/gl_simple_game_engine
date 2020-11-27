@@ -13,6 +13,7 @@
 class PlaneObject : public Object {
 public:
 	PlaneObject();
+	~PlaneObject();
 
 	void draw();
 };

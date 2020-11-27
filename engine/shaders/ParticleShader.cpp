@@ -109,6 +109,13 @@ ParticleShader::ParticleShader(std::string texture) {
 	glUniform1i(getUniformLocation("tex"), 0);
 }
 
+ParticleShader::~ParticleShader() {
+	glDeleteTextures(1, &textureId);
+	glBindVertexArray(vao);
+	glDeleteBuffers(1, &vbo);
+	glDeleteVertexArrays(1, &vao);
+}
+
 void ParticleShader::enableAttribs() {
 	glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) 0);

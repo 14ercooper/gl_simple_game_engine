@@ -12,6 +12,7 @@
 class ParticleShader : public ShaderProgram {
 public:
 	ParticleShader(std::string texture);
+	~ParticleShader();
 
 	void enableAttribs();
 

@@ -13,6 +13,7 @@
 class CubeObject : public Object {
 public:
 	CubeObject();
+	~CubeObject();
 
 	void draw();
 };

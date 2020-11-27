@@ -23,7 +23,7 @@ class Object {
 public:
 	// Create a new object
 	Object();
-	~Object();
+	virtual ~Object();
 
 	// Store the current transform of this object in 3D space
 	glm::vec3 position;
@@ -111,6 +111,9 @@ protected:
 
 	// What tags do we have?
 	std::set<std::string> tags;
+
+	// For cleanup
+	bool delMat, delCol, delMod, delPhys, delCont, delPost, delShader;
 };
 
 // This just feels hacky

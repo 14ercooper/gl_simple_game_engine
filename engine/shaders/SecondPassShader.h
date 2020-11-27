@@ -10,6 +10,7 @@
 class SecondPassShader : public ShaderProgram {
 public:
 	SecondPassShader(int fboWidth, int fboHeight);
+	~SecondPassShader();
 
 	void enableAttribs();
 

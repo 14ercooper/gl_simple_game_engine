@@ -9,6 +9,11 @@ PlaneObject::PlaneObject () {
 	scale(glm::vec3(1.0f, 0.1f, 1.0f));
 }
 
+PlaneObject::~PlaneObject() {
+	if (delShader)
+		delete shaderProgram;
+}
+
 void PlaneObject::draw() {
 	shaderProgram->useProgram();
 	GameEngine::engineShaderProgram = shaderProgram;

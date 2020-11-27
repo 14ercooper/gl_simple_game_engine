@@ -109,6 +109,16 @@ SecondPassShader::SecondPassShader(int fboWidth, int fboHeight) {
     glVertexAttribPointer(getAttributeLocation("vTexCoord"), 2, GL_FLOAT, GL_FALSE, sizeof(VertexTextured), (void*) (sizeof(GLfloat) * 3));
 }
 
+SecondPassShader::~SecondPassShader() {
+    glDeleteTextures(1, &textureHandle);
+    glBindVertexArray(quadVAO);
+    glDeleteBuffers(1, &quadVBO);
+    glDeleteBuffers(1, &quadIBO);
+    glDeleteVertexArrays(1, &quadVAO);
+    glDeleteFramebuffers(1, &fbo);
+    glDeleteRenderbuffers(1, &rbo);
+}
+
 void SecondPassShader::enableAttribs() {
 	// We don't actually need to do this, since this is in setup
 }

@@ -8,6 +8,11 @@ ParticleSystem::ParticleSystem (std::string texture, float gravity) {
 	this->gravity = gravity;
 }
 
+ParticleSystem::~ParticleSystem() {
+	if (delShader)
+		delete shader;
+}
+
 void ParticleSystem::draw() {
 	// Set the uniforms of the shader
 	shader->uniformMat4("modelMatrix", glm::mat4(1.0f));

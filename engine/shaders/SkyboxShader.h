@@ -15,6 +15,7 @@ class SkyboxShader : public ShaderProgram {
 public:
 	// Order: px nx py ny pz nz
 	SkyboxShader(std::vector<std::string> textures);
+	~SkyboxShader();
 
 	void enableAttribs();
 

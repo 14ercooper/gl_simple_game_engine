@@ -22,16 +22,24 @@ Object::Object() {
 	shouldDestroy = false;
 
 	parent = nullptr;
+
+	delMat = delCol = delMod = delPhys = delCont = delPost = delShader = true;
 }
 
 Object::~Object() {
-	delete material;
-	delete collider;
-	delete model;
+	if (delMat)
+		delete material;
+	if (delCol)
+		delete collider;
+	if (delMod)
+		delete model;
 
-	delete physicsTickScript;
-	delete controlTickScript;
-	delete postTickScript;
+	if (delPhys)
+		delete physicsTickScript;
+	if (delCont)
+		delete controlTickScript;
+	if (delPost)
+		delete postTickScript;
 
 	// delete rotation; // TODO figure out why this crashes
 }
@@ -39,7 +47,7 @@ Object::~Object() {
 void Object::setShader(ShaderProgram* shader, bool deleteOld) {
 	if (deleteOld)
 		delete shaderProgram;
-
+	delShader = false;
 	shaderProgram = shader;
 }
 
@@ -90,6 +98,7 @@ void Object::addVelocity(glm::vec3 amount) {
 void Object::setMaterial(Material* m, bool deleteOld) {
 	if (deleteOld)
 		delete material;
+	delMat = false;
 	material = m;
 }
 
@@ -97,12 +106,14 @@ void Object::setCollider(Collider* c, bool deleteOld) {
 	if (deleteOld)
 		if (collider != nullptr)
 			delete collider;
+	delCol = false;
 	collider = c;
 }
 
 void Object::setModel(Model* m, bool deleteOld) {
 	if (deleteOld)
 		delete model;
+	delMod = false;
 	model = m;
 }
 
@@ -121,18 +132,21 @@ Model* Object::getModel() {
 void Object::setPhysicsTick(Script* s, bool deleteOld) {
 	if (deleteOld)
 		delete physicsTickScript;
+	delPhys = false;
 	physicsTickScript = s;
 }
 
 void Object::setControlTick(Script* s, bool deleteOld) {
 	if (deleteOld)
 		delete controlTickScript;
+	delCont = false;
 	controlTickScript = s;
 }
 
 void Object::setPostTick(Script* s, bool deleteOld) {
 	if (deleteOld)
 		delete postTickScript;
+	delPost = false;
 	postTickScript = s;
 }
 

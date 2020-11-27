@@ -128,6 +128,12 @@ SkyboxShader::SkyboxShader (std::vector<std::string> textures) {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), (void*) 0);
 }
 
+SkyboxShader::~SkyboxShader() {
+	glDeleteTextures(1, &cubemapId);
+	glBindVertexArray(vao);
+	glDeleteBuffers(1, &vbo);
+	glDeleteVertexArrays(1, &vao);}
+
 void SkyboxShader::enableAttribs() {
 	// This is part of setup, so we don't need to do anything
 }

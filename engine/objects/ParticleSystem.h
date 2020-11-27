@@ -22,6 +22,7 @@ class ParticleSystem : public Object {
 public:
 	// Create a new particle system using the texture given and applying gravity of the given amount
 	ParticleSystem(std::string texture, float gravity);
+	~ParticleSystem();
 
 	// Draw the particle system
 	void draw();

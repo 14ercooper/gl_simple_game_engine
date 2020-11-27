@@ -15,6 +15,10 @@ CubeObject::CubeObject () {
 	setCollider(new Collider(this), false);
 }
 
+CubeObject::~CubeObject() {
+	delete shaderProgram;
+}
+
 void CubeObject::draw() {
 	// Use shader
 	shaderProgram->useProgram();

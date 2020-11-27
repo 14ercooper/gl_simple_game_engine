@@ -9,6 +9,12 @@ TexturedPlaneObject::TexturedPlaneObject(std::string filename) {
 	textureHandle = TextureUtils::loadAndRegisterTexture(filename.c_str());
 }
 
+TexturedPlaneObject::~TexturedPlaneObject() {
+	if (delShader)
+		delete shaderProgram;
+	glDeleteTextures(1, &textureHandle);
+}
+
 void TexturedPlaneObject::draw() {
 	shaderProgram->useProgram();
 	GameEngine::engineShaderProgram = shaderProgram;
