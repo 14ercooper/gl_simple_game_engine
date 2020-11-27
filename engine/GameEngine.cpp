@@ -179,7 +179,7 @@ bool GameEngine::render() {
 	}
 
 	// Delete any objects that have expired
-	for (int i = 0; i < objects.size(); i++) {
+	for (long unsigned int i = 0; i < objects.size(); i++) {
 		if (objects.at(i)->getDestroy()) {
 			Object* obj = objects.at(i);
 			objects.erase(objects.begin() + i);
@@ -194,7 +194,7 @@ bool GameEngine::render() {
 	}
 
 	// Delete expired engine scripts
-	for (int i = 0; i < engineScripts.size(); i++) {
+	for (long unsigned int i = 0; i < engineScripts.size(); i++) {
 		if (engineScripts.at(i)->getDestroy()) {
 			Script* obj = engineScripts.at(i);
 			engineScripts.erase(engineScripts.begin() + i);
@@ -320,7 +320,7 @@ void GameEngine::doCollisionCalc() {
 	triggers.erase(triggers.begin(), triggers.begin() + triggers.size());
 
 	// Go through objects and build up the lists
-	for (int i = 0; i < objects.size(); i++) {
+	for (long unsigned int i = 0; i < objects.size(); i++) {
 		if (objects.at(i)->getCollider() == nullptr)
 			continue;
 		else if (objects.at(i)->getCollider()->isTrigger)

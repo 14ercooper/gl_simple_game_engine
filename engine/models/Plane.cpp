@@ -5,7 +5,7 @@ GLuint PlaneModel::vao = -1;
 GLuint PlaneModel::vbo = -1;
 
 void PlaneModel::draw() {
-	if (vao == -1) {
+	if (vao == (GLuint) -1) {
 		Vertex verticies[6] = { // TODO figure out why these normals need to be negative
 			{-1, 0, -1, 0, -1, 0},
 			{-1, 0, 1, 0, -1, 0},

@@ -19,7 +19,7 @@ public:
 	ShaderProgram(std::string vertexShader, std::string geometryShader, std::string fragmentShader);
 	ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string fragmentShader);
 	ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string geometryShader, std::string fragmentShader);
-	~ShaderProgram();
+	virtual ~ShaderProgram();
 
 	// Get the locations of uniforms and atrributes by name
 	GLuint getUniformLocation(std::string name);

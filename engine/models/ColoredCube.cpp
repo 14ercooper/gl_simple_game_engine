@@ -5,7 +5,7 @@ GLuint ColoredCube::vao = -1;
 GLuint ColoredCube::vbo = -1;
 
 void ColoredCube::draw() {
-	if (vao == -1) {
+	if (vao == (GLuint) -1) {
 		// Set up cube VAO
 		// Create vertex array
 		Vertex verticies[36] = {

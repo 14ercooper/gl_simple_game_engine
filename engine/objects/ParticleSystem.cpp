@@ -20,7 +20,7 @@ void ParticleSystem::draw() {
 	shader->uniformMat4("projectionMatrix", GameEngine::engineCamera->getProjectionMatrix(GameEngine::engineWindow));
 
 	// Update particles, deleting as needed
-	for (int i = 0; i < particles.size(); i++) {
+	for (long unsigned int i = 0; i < particles.size(); i++) {
 		Particle p = particles.at(i);
 		if (p.age > p.lifespan) {
 			particles.erase(particles.begin() + i);

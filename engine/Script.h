@@ -8,6 +8,7 @@ class Script {
 public:
 	// Create a new script
 	Script();
+	virtual ~Script();
 
 	// Run the script. Default is no action.
 	// The void** allows for passing of an array of arbitrary pointers

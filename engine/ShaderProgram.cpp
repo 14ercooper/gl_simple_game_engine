@@ -111,25 +111,25 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlSh
 }
 
 ShaderProgram::~ShaderProgram() {
-	if (programHandle == -1)
+	if (programHandle == (GLuint) -1)
 		return;
 	glDeleteProgram(programHandle);
 }
 
 GLuint ShaderProgram::getUniformLocation(std::string name) {
-	if (programHandle == -1)
+	if (programHandle == (GLuint) -1)
 		return -1;
 	return glGetUniformLocation(programHandle, name.c_str());
 }
 
 GLuint ShaderProgram::getAttributeLocation(std::string name) {
-	if (programHandle == -1)
+	if (programHandle == (GLuint) -1)
 		return -1;
 	return glGetAttribLocation(programHandle, name.c_str());
 }
 
 void ShaderProgram::useProgram() {
-	if (programHandle == -1)
+	if (programHandle == (GLuint) -1)
 		return;
 	glUseProgram(programHandle);
 }

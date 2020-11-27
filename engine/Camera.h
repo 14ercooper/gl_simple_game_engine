@@ -19,6 +19,7 @@ class Camera {
 public:
 	// Create a new camera
 	Camera();
+	virtual ~Camera();
 
 	// The position, look at location, and up vector of the camera
 	glm::vec3 pos;

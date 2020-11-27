@@ -13,6 +13,10 @@ Camera::Camera() {
 	arcDist = 20.0f;
 }
 
+Camera::~Camera() {
+	// We don't need to do anything
+}
+
 glm::mat4 Camera::getViewMatrix() {
 	return glm::lookAt(pos, lookAt, up);
 }

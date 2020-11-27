@@ -6,6 +6,9 @@
 // Default has nothing
 class Model {
 public:
+	Model();
+	virtual ~Model();
+
 	// Draw this model. This can be overloaded to define a custom model.
 	virtual void draw();
 };

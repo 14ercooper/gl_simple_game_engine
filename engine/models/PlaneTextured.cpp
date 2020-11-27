@@ -5,7 +5,7 @@ GLuint PlaneTexturedModel::vao = -1;
 GLuint PlaneTexturedModel::vbo = -1;
 
 void PlaneTexturedModel::draw() {
-	if (vao == -1) {
+	if (vao == (GLuint) -1) {
 		VertexTextured verticies[6] = { // TODO figure out why these normals need to be negative
 			{-1, 0, -1, 0, -1, 0, 0, 0},
 			{-1, 0, 1, 0, -1, 0, 0, 1},
