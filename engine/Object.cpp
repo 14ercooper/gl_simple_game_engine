@@ -71,7 +71,7 @@ int Object::quarterstepTranslate(glm::vec3 amount) {
 		}
 		else {
 			// Prevent getting stuck
-			for (int i = 0; i < 32; i++) {
+			for (int j = 0; j < 32; j++) {
 				position -= quaterstep;
 				if (GameEngine::engine->checkCollisions(collider).size() == 0)
 					break;
