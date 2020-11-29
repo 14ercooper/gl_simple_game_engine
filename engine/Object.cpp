@@ -62,7 +62,7 @@ void Object::translate(glm::vec3 amount) {
 int Object::quarterstepTranslate(glm::vec3 amount) {
 	if (collider == nullptr || collider->isTrigger) {
 		position += amount;
-		return 4;
+		return 16;
 	}
 	glm::vec3 quaterstep = amount * 0.25f * 0.25f;
 	for (int i = 0; i < 16; i++) {
@@ -70,6 +70,12 @@ int Object::quarterstepTranslate(glm::vec3 amount) {
 			position += quaterstep;
 		}
 		else {
+			// Prevent getting stuck
+			for (int i = 0; i < 32; i++) {
+				position -= quaterstep;
+				if (GameEngine::engine->checkCollisions(collider).size() == 0)
+					break;
+			}
 			return i;
 		}
 	}
