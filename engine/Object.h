@@ -33,7 +33,8 @@ public:
 
 	// Update the transform of this object
 	void translate(glm::vec3 amount);
-	int quarterstepTranslate(glm::vec3 amount); // Checks for collisions before moving, stopping if one is found. Returns the number of quartersteps moved.
+	int quarterstepTranslate(glm::vec3 amount); // Checks for collisions before moving, stopping if one is found. Returns the number of quartersteps moved (16 = no hit).
+	int quarterstepTranslateRay(glm::vec3 amount, glm::vec3 offset);
 	void rotate(Quaternion* rotation);
 	void rotate(float theta, float x, float y, float z);
 	void scale(glm::vec3 amount);

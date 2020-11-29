@@ -6,7 +6,7 @@ Camera::Camera() {
 	this->lookAt = glm::vec3(0.0f, 0.0f, 0.0f);
 	this->up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	follow = nullptr;
+	this->follow = nullptr;
 
 	arcVert = 1.0f;
 	arcRot = 0.0f;
@@ -64,4 +64,10 @@ void Camera::update() {
 
 	// Update the camera pos
 	pos = lookAt + (arcDist * camVector);
+}
+
+void Camera::setFollow(Object* obj, bool destroyOld) {
+	if (destroyOld && this->follow != nullptr)
+		delete follow;
+	this->follow = obj;
 }

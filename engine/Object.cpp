@@ -64,8 +64,8 @@ int Object::quarterstepTranslate(glm::vec3 amount) {
 		position += amount;
 		return 4;
 	}
-	glm::vec3 quaterstep = amount * 0.25f;
-	for (int i = 0; i < 4; i++) {
+	glm::vec3 quaterstep = amount * 0.25f * 0.25f;
+	for (int i = 0; i < 16; i++) {
 		if (GameEngine::engine->checkCollisions(collider, quaterstep.x, quaterstep.y, quaterstep.z).size() == 0) {
 			position += quaterstep;
 		}
@@ -73,7 +73,26 @@ int Object::quarterstepTranslate(glm::vec3 amount) {
 			return i;
 		}
 	}
-	return 4;
+	return 16;
+}
+
+int Object::quarterstepTranslateRay(glm::vec3 amount, glm::vec3 offset) {
+	if (collider == nullptr || collider->isTrigger) {
+		position += amount;
+		return 16;
+	}
+	glm::vec3 quaterstep = amount * 0.25f * 0.25f;
+	float dist = glm::length(quaterstep);
+
+	for (int i = 0; i < 16; i++) {
+		if (GameEngine::engine->raycast(this->position + offset, quaterstep, dist, 100, this->getCollider(), false) == nullptr) {
+			position += quaterstep;
+		}
+		else {
+			return i;
+		}
+	}
+	return 16;
 }
 
 void Object::rotate(Quaternion* rotation) {

@@ -305,9 +305,10 @@ std::vector<Object*> GameEngine::checkTriggers(Collider* c, float testX, float t
 	return collisionsFound;
 }
 
-Object* GameEngine::raycast(glm::vec3 origin, glm::vec3 direction, float distance, float step, Collider* ignore, bool hitTrigger) {
+Object* GameEngine::raycast(glm::vec3 origin, glm::vec3 direction, float distance, float steps, Collider* ignore, bool hitTrigger) {
 	direction = glm::normalize(direction);
 	float distanceGone = 0.0f;
+	float step = distance / steps;
 
 	// Check each step
 	while (distanceGone <= distance) {
@@ -317,16 +318,18 @@ Object* GameEngine::raycast(glm::vec3 origin, glm::vec3 direction, float distanc
 		if (hitTrigger) {
 			for (Object* obj : triggers) {
 				if (obj->getCollider()->pointInCollider(point)) {
-					if (ignore != obj->getCollider())
+					if (ignore != obj->getCollider()) {
 						return obj;
+					}
 				}
 			}
 		}
 		else {
 			for (Object* obj : colliders) {
 				if (obj->getCollider()->pointInCollider(point)) {
-					if (ignore != obj->getCollider())
+					if (ignore != obj->getCollider()) {
 						return obj;
+					}
 				}
 			}
 		}

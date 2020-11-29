@@ -10,26 +10,31 @@ void** SimplePhysics::run(void** args) {
 	GameEngine::currentObject->velocity += glm::vec3(0.0f, -0.001f, 0.0f);
 
 	// Clamp movement speed
-	GameEngine::currentObject->velocity.x = clamp(GameEngine::currentObject->velocity.x, -2.0f, 2.0f);
-	GameEngine::currentObject->velocity.y = clamp(GameEngine::currentObject->velocity.y, -0.35f, 2.0f);
-	GameEngine::currentObject->velocity.z = clamp(GameEngine::currentObject->velocity.z, -2.0f, 2.0f);
-
-	// Apply horizontal quaterstep movement
-	GameEngine::currentObject->translate(glm::vec3(0.0f, 1.0f, 0.0f));
-	int hStepsDone = GameEngine::currentObject->quarterstepTranslate(glm::vec3(GameEngine::currentObject->velocity.x, 0.0f, GameEngine::currentObject->velocity.z));
-	GameEngine::currentObject->quarterstepTranslate(glm::vec3(0.0f, -1.0f, 0.0f));
+	GameEngine::currentObject->velocity.x = clamp(GameEngine::currentObject->velocity.x, -0.35f, 0.35f);
+	GameEngine::currentObject->velocity.y = clamp(GameEngine::currentObject->velocity.y, -0.35f, 0.35f);
+	GameEngine::currentObject->velocity.z = clamp(GameEngine::currentObject->velocity.z, -0.35f, 0.35f);
 
 	// Apply vertical quaterstep movement
-	int vStepsDone = GameEngine::currentObject->quarterstepTranslate(glm::vec3(0.0f, GameEngine::currentObject->velocity.y, 0.0f));
+	int vStepsDone = GameEngine::currentObject->quarterstepTranslateRay(glm::vec3(0.0f, GameEngine::currentObject->velocity.y, 0.0f), glm::vec3(0, -GameEngine::currentObject->currentScale.y, 0));
+
+	// Apply horizontal quaterstep movement
+	glm::vec3 horizontalMove = glm::vec3(GameEngine::currentObject->velocity.x, 0.0f, GameEngine::currentObject->velocity.z);
+	GameEngine::currentObject->translate(glm::vec3(0.0f, 0.1f, 0.0f));
+	int hStepsDone = GameEngine::currentObject->quarterstepTranslate(horizontalMove);
+	GameEngine::currentObject->quarterstepTranslateRay(glm::vec3(0.0f, -0.2f, 0.0f), glm::vec3(0, -1, 0));
 
 	// Stop if we hit something
-	if (hStepsDone != 4) {
+	if (hStepsDone != 16) {
 		GameEngine::currentObject->velocity.x = 0.0f;
 		GameEngine::currentObject->velocity.z = 0.0f;
 	}
-	if (vStepsDone != 4) {
+	if (vStepsDone != 16) {
 		GameEngine::currentObject->velocity.y = 0.0f;
 	}
+
+	// Slow down horizontal movement over time
+	GameEngine::currentObject->velocity.x *= 0.98f;
+	GameEngine::currentObject->velocity.z *= 0.98f;
 
 	return (void**) 0;
 }

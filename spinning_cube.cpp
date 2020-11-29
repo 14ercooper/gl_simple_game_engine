@@ -6,12 +6,14 @@
 #include <cstdio>
 
 #include "engine/GameEngine.h"
+#include "engine/Camera.h"
 #include "engine/math/Quaternion.h"
 #include "engine/objects/Cube.h"
 #include "engine/objects/TexturedPlane.h"
 #include "engine/objects/ParticleSystem.h"
 #include "engine/scripts/SimplePhysics.h"
 #include "engine/scripts/CloseOnEscape.h"
+#include "engine/scripts/SimpleMovement.cpp"
 #include "engine/shaders/SecondPassShader.h"
 #include "engine/shaders/SkyboxShader.h"
 
@@ -41,10 +43,13 @@ int main () {
 	rotateCube->euler(0.01f, 1, 2, 1);
 
 	// Add 3 cube objects
+	// The first also has a movement controller
 	CubeObject *cube = new CubeObject();
 	cube->translate(glm::vec3(0.0f, 20.0f, 0.0f));
 	Script* physics = new SimplePhysics();
+	Script* control = new SimpleMovement();
 	cube->setPhysicsTick(physics, true);
+	cube->setControlTick(control, true);
 	engine->addObject(cube);
 
 	CubeObject *cube2 = new CubeObject();
@@ -57,6 +62,11 @@ int main () {
 	cube3->setPhysicsTick(physics, true);
 	engine->addObject(cube3);
 
+	// Make the camera follow the "player"
+	Camera* cam = new Camera();
+	cam->setFollow(cube, true);
+	engine->setCamera(cam, true);
+
 	// Create a particle system
 	ParticleSystem* particles = new ParticleSystem("textures/particle.png", 0.0f);
 	engine->addObject(particles);
@@ -68,7 +78,7 @@ int main () {
 	// Add a ground
 	TexturedPlaneObject *ground = new TexturedPlaneObject("textures/ground.png");
 	ground->translate(glm::vec3(0.0f, -3.0f, 0.0f));
-	ground->scale(glm::vec3(10.0f, 1.0f, 10.0f));
+	ground->scale(glm::vec3(50.0f, 1.0f, 50.0f));
 
 	Quaternion* groundRot = new Quaternion();
 	groundRot->euler(-0.5f, 1, 0, 0);
@@ -87,14 +97,14 @@ int main () {
 		cube3->rotation->hamilton(rotateCube);
 
 		// Spawn particles
-		if (particles->size() < 10)
-			if (getRand() < -0.75)
-				particles->addParticle(10 * getRand(), 10 * getRand(), 10 * getRand(),
-					0.05 * getRand(), 0.05 * getRand(), 0.05 * getRand(), 200);
+		if (particles->size() < 250)
+			if (getRand() < 0)
+				particles->addParticle(50 * getRand(), 50 * getRand(), 50 * getRand(),
+					0.05 * getRand(), 0.05 * getRand(), 0.05 * getRand(), 300);
 
-		if (engine->raycast(glm::vec3(3, 8, 3), glm::vec3(0, -1, 0), 20, 0.01, nullptr, false) != nullptr) {
-			// This raycast hit a collisder
-		}
+		// if (engine->raycast(glm::vec3(3, 8, 3), glm::vec3(0, -1, 0), 20, 200, nullptr, false) != nullptr) {
+		// 	// This raycast hit a collisder
+		// }
 	}
 
 	// Clean up the engine
