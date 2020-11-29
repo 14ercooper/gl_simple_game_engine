@@ -22,11 +22,11 @@ void** SimpleMovement::run(void** args) {
 	// printf("%f %f %f\n", rightVec.x, rightVec.y, rightVec.z);
 
 	// Check grounded (for jump)
-	if (GameEngine::engine->checkCollisions(GameEngine::currentObject->getCollider(), 0.0f, -0.1f, 0.0f).size() == 0) {
-		isGrounded = true;
+	if (GameEngine::engine->raycast(GameEngine::currentObject->position, glm::vec3(0, -1, 0), GameEngine::currentObject->currentScale.y * 1.1f, 100, GameEngine::currentObject->getCollider(), false) == nullptr) {
+		isGrounded = false;
 	}
 	else {
-		isGrounded = false;
+		isGrounded = true;
 	}
 
 	// Reset jump if valid
@@ -51,7 +51,8 @@ void** SimpleMovement::run(void** args) {
 
 	// Apply jump
 	if (jump && !hasJumped && isGrounded) {
-		GameEngine::currentObject->velocity.y = 0.1f;
+		GameEngine::currentObject->translate(glm::vec3(0, 0.1f, 0));
+		GameEngine::currentObject->velocity.y = 0.22f;
 		hasJumped = true;
 	}
 
