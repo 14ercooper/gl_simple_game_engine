@@ -1,5 +1,6 @@
 
 #include "InputSystem.h"
+#include <cstdio>
 
 void InputSystem::cursor_callback( GLFWwindow* window, double xPos, double yPos ) {
 	if (mouseX == -99999) {
@@ -9,6 +10,8 @@ void InputSystem::cursor_callback( GLFWwindow* window, double xPos, double yPos 
 	}
 
 	mouseAccel += glm::vec2(xPos - mouseX, yPos - mouseY);
+
+	// printf("%f %f\n", mouseAccel.x, mouseAccel.y);
 
 	mouseX = xPos;
 	mouseY = yPos;

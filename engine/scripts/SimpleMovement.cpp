@@ -15,7 +15,8 @@ void** SimpleMovement::run(void** args) {
 	bool left = InputSystem::isKeyPressed(GLFW_KEY_A);
 	bool jump = InputSystem::isKeyPressed(GLFW_KEY_SPACE);
 
-	glm::vec3 forwardVec = GameEngine::currentObject->position - GameEngine::engineCamera->pos;
+	// glm::vec3 forwardVec = GameEngine::currentObject->position - GameEngine::engineCamera->pos;
+	glm::vec3 forwardVec = GameEngine::engineCamera->getViewingVector() * -1.0f;
 	forwardVec.y = 0;
 	glm::vec3 rightVec = glm::cross(forwardVec, glm::vec3(0.0f, 1.0f, 0.0f));
 

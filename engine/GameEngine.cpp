@@ -47,7 +47,8 @@ GameEngine::GameEngine() {
 
 	glewExperimental = GL_TRUE;
     GLenum glewResult = glewInit();
-
+    //Hides cursor
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     // check for an error
     if( glewResult != GLEW_OK ) {
         fprintf( stderr, "[ERROR]: Error initializing GLEW\n");
@@ -71,6 +72,10 @@ GameEngine::GameEngine() {
 	skyboxShader = nullptr;
 
 	doneCollisionCalc = false;
+	
+	GameEngine::engine = this;
+	GameEngine::engineWindow = this->window;
+	GameEngine::engineCamera = this->camera;
 }
 
 // Clean up our memory
@@ -85,7 +90,7 @@ GameEngine::~GameEngine() {
 void GameEngine::setWindowSize(int width, int height) {
 	if (width < 1 || height < 1) {
 		// Full screen
-		glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 19200, 10800, 60);
+		glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 19200, 10800, GLFW_DONT_CARE);
 	}
 	else {
 		// Windowed
@@ -120,6 +125,7 @@ void GameEngine::setCamera(Camera* cam, bool destroyOld) {
 	if (destroyOld)
 		delete camera;
 	camera = cam;
+	GameEngine::engineCamera = camera;
 }
 
 // Draw the scene to the screen
@@ -132,7 +138,7 @@ bool GameEngine::render() {
 
     // update the viewport - tell OpenGL we want to render to the whole window
     glViewport( 0, 0, windowWidth, windowHeight );
-	
+
 	// Update statics
 	GameEngine::engine = this;
 	GameEngine::engineWindow = this->window;
@@ -171,11 +177,6 @@ bool GameEngine::render() {
 		obj->draw();
 	}
 
-	// If using second pass, draw it to the screen
-	if (secondPassShader != nullptr) {
-		secondPassShader->drawBufferToScreen();
-	}
-
 	// Tick post
 	for (Object* obj : objects) {
 		currentObject = obj;
@@ -207,6 +208,16 @@ bool GameEngine::render() {
 		}
 	}
 
+	// Return that we're still drawing
+	return !glfwWindowShouldClose(window);
+}
+
+void GameEngine::postRender() {
+	// If using second pass, draw it to the screen
+	if (secondPassShader != nullptr) {
+		secondPassShader->drawBufferToScreen();
+	}
+
 	// Flush and swap buffers, trigger draw, and poll keypresses
 	InputSystem::resetDynamicInputs();
 	glfwSwapBuffers(window);
@@ -214,17 +225,9 @@ bool GameEngine::render() {
 
 	// Reset the collisions flag
 	doneCollisionCalc = false;
-
-	// Return that we're still drawing
-	return !glfwWindowShouldClose(window);
 }
 
 void GameEngine::renderNoUpdate() {
-	// If using second pass, use it
-	if (secondPassShader != nullptr) {
-		secondPassShader->setDrawToBuffer();
-	}
-
 	// If we have a skybox, draw it
 	if (skyboxShader != nullptr)
 		skyboxShader->drawSkybox();
@@ -233,11 +236,6 @@ void GameEngine::renderNoUpdate() {
 	for (Object* obj : objects) {
 		currentObject = obj;
 		obj->draw();
-	}
-
-	// If using second pass, draw it to the screen
-	if (secondPassShader != nullptr) {
-		secondPassShader->drawBufferToScreen();
 	}
 }
 

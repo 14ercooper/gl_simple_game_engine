@@ -105,6 +105,8 @@ int main () {
 		// if (engine->raycast(glm::vec3(3, 8, 3), glm::vec3(0, -1, 0), 20, 200, nullptr, false) != nullptr) {
 		// 	// This raycast hit a collisder
 		// }
+
+		engine->postRender();
 	}
 
 	// Clean up the engine

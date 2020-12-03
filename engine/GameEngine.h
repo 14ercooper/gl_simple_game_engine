@@ -48,6 +48,7 @@ public:
 	// Returns: bool on if the window is still open and being drawn to
 	// true = window still open, keep drawing
 	bool render();
+	void postRender();
 
 	// Only draw objects (useful for multi-camera)
 	// Also applies the second pass shader
