@@ -7,7 +7,7 @@ SimplePhysics::SimplePhysics() {
 
 void** SimplePhysics::run(void** args) {
 	// Add gravity
-	GameEngine::currentObject->velocity += glm::vec3(0.0f, -0.001f, 0.0f);
+	GameEngine::currentObject->velocity += glm::vec3(0.0f, -0.002f, 0.0f);
 
 	// Clamp movement speed
 	GameEngine::currentObject->velocity.x = clamp(GameEngine::currentObject->velocity.x, -0.35f, 0.35f);

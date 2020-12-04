@@ -76,6 +76,9 @@ public:
 	static ShaderProgram* engineShaderProgram;
 	static Object* currentObject;
 
+	// Timer
+	static long long unsigned int engineTimer;
+
 private:
 	// The window object
 	GLFWwindow *window;
@@ -98,6 +101,9 @@ private:
 
 	// Engine scripts
 	std::vector<Script*> engineScripts;
+
+	// Internal timer
+	long long unsigned int timer;
 };
 
 #endif

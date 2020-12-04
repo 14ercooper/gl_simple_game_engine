@@ -6,6 +6,7 @@ GLFWwindow* GameEngine::engineWindow = nullptr;
 Camera* GameEngine::engineCamera = nullptr;
 ShaderProgram* GameEngine::engineShaderProgram = nullptr;
 Object* GameEngine::currentObject = nullptr;
+long long unsigned int GameEngine::engineTimer = 0;
 
 void error_callback(int error, const char* description) {
     fprintf(stderr, "[ERROR]: (%d) %s\n", error, description);
@@ -76,6 +77,8 @@ GameEngine::GameEngine() {
 	GameEngine::engine = this;
 	GameEngine::engineWindow = this->window;
 	GameEngine::engineCamera = this->camera;
+
+	timer = 0;
 }
 
 // Clean up our memory
@@ -140,6 +143,7 @@ bool GameEngine::render() {
     glViewport( 0, 0, windowWidth, windowHeight );
 
 	// Update statics
+	GameEngine::engineTimer = ++timer;
 	GameEngine::engine = this;
 	GameEngine::engineWindow = this->window;
 	GameEngine::engineCamera = this->camera;
@@ -225,6 +229,8 @@ void GameEngine::postRender() {
 
 	// Reset the collisions flag
 	doneCollisionCalc = false;
+
+	timer = GameEngine::engineTimer;
 }
 
 void GameEngine::renderNoUpdate() {
