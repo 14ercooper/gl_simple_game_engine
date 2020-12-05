@@ -33,6 +33,10 @@ void main() {
 }
 )FOURTEENER";
 
+SecondPassShader::SecondPassShader() {
+    // Do nothing
+}
+
 SecondPassShader::SecondPassShader(int fboWidth, int fboHeight) {
     maxDirectionalLights = 0;
     maxAmbientLights = 0;

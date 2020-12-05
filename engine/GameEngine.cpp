@@ -366,6 +366,34 @@ void GameEngine::addLight(Light* light, bool forceFirst) {
 }
 
 void GameEngine::useLights() {
+	// Clean up dead lights
+	for (long unsigned int i = 0; i < directionalLights.size(); i++) {
+		if (directionalLights.at(i)->getDestroy()) {
+			Light* obj = directionalLights.at(i);
+			directionalLights.erase(directionalLights.begin() + i);
+			delete obj;
+			i--; // Don't skip over any objects
+		}
+	}
+
+	for (long unsigned int i = 0; i < ambientLights.size(); i++) {
+		if (ambientLights.at(i)->getDestroy()) {
+			Light* obj = ambientLights.at(i);
+			ambientLights.erase(ambientLights.begin() + i);
+			delete obj;
+			i--; // Don't skip over any objects
+		}
+	}
+
+	for (long unsigned int i = 0; i < pointLights.size(); i++) {
+		if (pointLights.at(i)->getDestroy()) {
+			Light* obj = pointLights.at(i);
+			pointLights.erase(pointLights.begin() + i);
+			delete obj;
+			i--; // Don't skip over any objects
+		}
+	}
+
 	// Set directional lights
 	int directionalToSet = GameEngine::engineShaderProgram->maxDirectionalLights > directionalLights.size() ? GameEngine::engineShaderProgram->maxDirectionalLights : directionalLights.size();
 	if (directionalToSet > 0) {

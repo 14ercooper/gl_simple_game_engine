@@ -10,6 +10,7 @@
 class SecondPassShader : public ShaderProgram {
 public:
 	SecondPassShader(int fboWidth, int fboHeight);
+	SecondPassShader();
 	~SecondPassShader();
 
 	void enableAttribs();
@@ -20,7 +21,7 @@ public:
 	static const char* passthroughVertexProgram;
 	static const char* passthroughFragmentProgram;
 
-private:
+protected:
 	int width, height;
 	GLuint fbo, rbo, textureHandle;
 	GLuint quadVAO, quadVBO, quadIBO;
