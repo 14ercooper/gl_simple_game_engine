@@ -38,6 +38,10 @@ void main()
 )FOURTEENER";
 
 SkyboxShader::SkyboxShader (std::vector<std::string> textures) {
+	maxDirectionalLights = 0;
+	maxAmbientLights = 0;
+	maxPointLights = 0;
+
 	GLuint vertex = compileShaderText(SkyboxShader::vertexProgram, GL_VERTEX_SHADER);
 	GLuint fragment = compileShaderText(SkyboxShader::fragmentProgram, GL_FRAGMENT_SHADER);
 

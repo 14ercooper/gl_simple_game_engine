@@ -17,6 +17,7 @@
 #include "engine/shaders/SecondPassShader.h"
 #include "engine/shaders/SkyboxShader.h"
 #include "engine/materials/MetallicOrange.h"
+#include "engine/Light.h"
 
 #include "Enemy.h"
 #include "OutOfBoundsScript.h"
@@ -33,6 +34,8 @@ int main () {
 	GameEngine *engine = new GameEngine();
 	engine->setWindowSize(-1, -1);
 	engine->renameWindow("Spinning Cube");
+	engine->addLight(new Light(LIGHT_TYPE::DIRECTIONAL, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f), false);
+	engine->addLight(new Light(LIGHT_TYPE::AMBIENT, 1.0f, 1.0f, 1.0f, 0.05f), false);
 
 	// Add a skybox
 	std::vector<std::string> skyTextures = {"textures/skybox/px.png",
@@ -102,7 +105,7 @@ int main () {
 	engine->addObject(rules);
 
 	// Create enemies scattered around the world
-	const int ENEMY_COUNT = 30;
+	const int ENEMY_COUNT = 10;
 	std::vector<EnemyObject*> enemies;
 	std::vector<Quaternion*> enemiesRot;
 	for (int i = 0; i < ENEMY_COUNT; i++) {

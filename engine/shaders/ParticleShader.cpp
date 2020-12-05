@@ -69,6 +69,10 @@ void main() {
 )FOURTEENER";
 
 ParticleShader::ParticleShader(std::string texture) {
+	maxDirectionalLights = 0;
+	maxAmbientLights = 0;
+	maxPointLights = 0;
+
 	// Load shader
 	GLuint vertex = compileShaderText(ParticleShader::vertexProgram, GL_VERTEX_SHADER);
 	GLuint geometry = compileShaderText(ParticleShader::geometryProgram, GL_GEOMETRY_SHADER);

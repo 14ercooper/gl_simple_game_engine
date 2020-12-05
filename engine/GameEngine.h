@@ -19,6 +19,7 @@
 #include "shaders/SkyboxShader.h"
 #include "InputSystem.h"
 #include "Script.h"
+#include "Light.h"
 
 // This is the heart of the engine. It consists of the central gameplay loop, as well as
 // managing the window, tracking objects, etc. This is the "game"
@@ -69,6 +70,11 @@ public:
 	// and can either hit triggers or colliders with the toggle (but not both)
 	Object* raycast(glm::vec3 origin, glm::vec3 direction, float distance, float steps, Collider* ignore, bool hitTrigger);
 
+	// For lighting
+	// If there are more lights than a shader supports, earlier lights are given priority
+	void addLight(Light* light, bool forceFirst);
+	void useLights(); // Push data to shaders, deleting lights as needed
+
 	// Statics to be accessed and used in objects
 	static GameEngine* engine;
 	static GLFWwindow* engineWindow;
@@ -94,6 +100,11 @@ private:
 
 	// Camera
 	Camera* camera;
+
+	// Store lights
+	std::vector<Light*> ambientLights;
+	std::vector<Light*> pointLights;
+	std::vector<Light*> directionalLights;
 
 	// Second pass shader and skybox shader
 	SecondPassShader* secondPassShader;

@@ -344,6 +344,137 @@ Object* GameEngine::raycast(glm::vec3 origin, glm::vec3 direction, float distanc
 	return nullptr;
 }
 
+void GameEngine::addLight(Light* light, bool forceFirst) {
+	if (light->type == LIGHT_TYPE::DIRECTIONAL) {
+		if (!forceFirst)
+			directionalLights.push_back(light);
+		else
+			directionalLights.insert(directionalLights.begin(), light);
+	}
+	else if (light->type == LIGHT_TYPE::AMBIENT) {
+		if (!forceFirst)
+			ambientLights.push_back(light);
+		else
+			ambientLights.insert(ambientLights.begin(), light);
+	}
+	else if (light->type == LIGHT_TYPE::POINT) {
+		if (!forceFirst)
+			pointLights.push_back(light);
+		else
+			pointLights.insert(pointLights.begin(), light);
+	}
+}
+
+void GameEngine::useLights() {
+	// Set directional lights
+	int directionalToSet = GameEngine::engineShaderProgram->maxDirectionalLights > directionalLights.size() ? GameEngine::engineShaderProgram->maxDirectionalLights : directionalLights.size();
+	if (directionalToSet > 0) {
+		// Create arrays
+		float* r = (float*) malloc(directionalToSet * sizeof(float));
+		float* g = (float*) malloc(directionalToSet * sizeof(float));
+		float* b = (float*) malloc(directionalToSet * sizeof(float));
+		float* intensity = (float*) malloc(directionalToSet * sizeof(float));
+		float* x = (float*) malloc(directionalToSet * sizeof(float));
+		float* y = (float*) malloc(directionalToSet * sizeof(float));
+		float* z = (float*) malloc(directionalToSet * sizeof(float));
+		// Put data into arrays
+		for (int j = 0; j < directionalToSet; j++) {
+			r[j] = directionalLights[j]->r;
+			g[j] = directionalLights[j]->g;
+			b[j] = directionalLights[j]->b;
+			intensity[j] = directionalLights[j]->intensity;
+			x[j] = directionalLights[j]->x;
+			y[j] = directionalLights[j]->y;
+			z[j] = directionalLights[j]->z;
+		}
+		// Buffer arrays
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalR", r, directionalToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalG", g, directionalToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalB", b, directionalToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalIntensity", intensity, directionalToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalX", x, directionalToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalY", y, directionalToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("directionalZ", z, directionalToSet);
+		// Delete arrays
+		delete[] r;
+		delete[] g;
+		delete[] b;
+		delete[] intensity;
+		delete[] x;
+		delete[] y;
+		delete[] z;
+	}
+	GameEngine::engineShaderProgram->uniformInt("directionalCount", directionalToSet);
+
+	// Set ambient lights
+	int ambientToSet = GameEngine::engineShaderProgram->maxAmbientLights > ambientLights.size() ? GameEngine::engineShaderProgram->maxAmbientLights : ambientLights.size();
+	if (ambientToSet > 0) {
+		// Create arrays
+		float* r = (float*) malloc(ambientToSet * sizeof(float));
+		float* g = (float*) malloc(ambientToSet * sizeof(float));
+		float* b = (float*) malloc(ambientToSet * sizeof(float));
+		float* intensity = (float*) malloc(ambientToSet * sizeof(float));
+		// Put data into arrays
+		for (int j = 0; j < ambientToSet; j++) {
+			r[j] = ambientLights[j]->r;
+			g[j] = ambientLights[j]->g;
+			b[j] = ambientLights[j]->b;
+			intensity[j] = ambientLights[j]->intensity;
+		}
+		// Buffer arrays
+		GameEngine::engineShaderProgram->uniformFloatArray("ambientR", r, ambientToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("ambientG", g, ambientToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("ambientB", b, ambientToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("ambientIntensity", intensity, ambientToSet);
+		// Delete arrays
+		delete[] r;
+		delete[] g;
+		delete[] b;
+		delete[] intensity;
+	}
+	GameEngine::engineShaderProgram->uniformInt("ambientCount", ambientToSet);
+
+	// Set point lights
+	int pointToSet = GameEngine::engineShaderProgram->maxPointLights < pointLights.size() ? GameEngine::engineShaderProgram->maxPointLights : pointLights.size();
+	if (pointToSet > 0) {
+		// Create arrays
+		float* r = (float*) malloc(pointToSet * sizeof(float));
+		float* g = (float*) malloc(pointToSet * sizeof(float));
+		float* b = (float*) malloc(pointToSet * sizeof(float));
+		float* intensity = (float*) malloc(pointToSet * sizeof(float));
+		float* x = (float*) malloc(pointToSet * sizeof(float));
+		float* y = (float*) malloc(pointToSet * sizeof(float));
+		float* z = (float*) malloc(pointToSet * sizeof(float));
+		// Put data into arrays
+		for (int j = 0; j < pointToSet; j++) {
+			r[j] = pointLights[j]->r;
+			g[j] = pointLights[j]->g;
+			b[j] = pointLights[j]->b;
+			intensity[j] = pointLights[j]->intensity;
+			x[j] = pointLights[j]->x;
+			y[j] = pointLights[j]->y;
+			z[j] = pointLights[j]->z;
+		}
+		// Buffer arrays
+		GameEngine::engineShaderProgram->uniformFloatArray("pointR", r, pointToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("pointG", g, pointToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("pointB", b, pointToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("pointIntensity", intensity, pointToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("pointX", x, pointToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("pointY", y, pointToSet);
+		GameEngine::engineShaderProgram->uniformFloatArray("pointZ", z, pointToSet);
+		// Delete arrays
+		delete[] r;
+		delete[] g;
+		delete[] b;
+		delete[] intensity;
+		delete[] x;
+		delete[] y;
+		delete[] z;
+	}
+	GameEngine::engineShaderProgram->uniformInt("pointCount", pointToSet);
+}
+
 void GameEngine::doCollisionCalc() {
 	if (doneCollisionCalc)
 		return;

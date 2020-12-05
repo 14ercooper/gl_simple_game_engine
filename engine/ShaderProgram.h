@@ -30,12 +30,18 @@ public:
 
 	// Send the given data type to the uniform of the given name
 	void uniformFloat(std::string pos, GLfloat value);
+	void uniformFloatArray(std::string pos, GLfloat* value, GLuint length);
 	void uniformInt(std::string pos, GLint value);
 	void uniformVec3(std::string pos, glm::vec3 value);
 	void uniformMat4(std::string pos, glm::mat4 value);
 
 	// Enable shader attributes
 	virtual void enableAttribs();
+
+	// Max supported lights in this shader
+	long unsigned int maxDirectionalLights;
+	long unsigned int maxAmbientLights;
+	long unsigned int maxPointLights;
 
 protected:
 	// Helpers for compiling shaders

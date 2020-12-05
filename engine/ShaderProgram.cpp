@@ -1,6 +1,8 @@
 
 #include "ShaderProgram.h"
 
+#include "GameEngine.h"
+
 ShaderProgram::ShaderProgram() {
 	// Mark as invalid
 	programHandle = -1;
@@ -24,6 +26,10 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string fragmentShade
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+
+	maxDirectionalLights = 0;
+	maxAmbientLights = 0;
+	maxPointLights = 0;
 }
 
 ShaderProgram::ShaderProgram(std::string vertexShader, std::string geometryShader, std::string fragmentShader) {
@@ -48,6 +54,10 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string geometryShade
 	glDeleteShader(vertex);
 	glDeleteShader(geometry);
 	glDeleteShader(fragment);
+
+	maxDirectionalLights = 0;
+	maxAmbientLights = 0;
+	maxPointLights = 0;
 }
 
 ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string fragmentShader) {
@@ -76,6 +86,10 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlSh
 	glDeleteShader(tessControl);
 	glDeleteShader(tessEval);
 	glDeleteShader(fragment);
+
+	maxDirectionalLights = 0;
+	maxAmbientLights = 0;
+	maxPointLights = 0;
 }
 
 ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlShader, std::string tessEvalShader, std::string geometryShader, std::string fragmentShader) {
@@ -108,6 +122,10 @@ ShaderProgram::ShaderProgram(std::string vertexShader, std::string tessControlSh
 	glDeleteShader(tessEval);
 	glDeleteShader(geometry);
 	glDeleteShader(fragment);
+
+	maxDirectionalLights = 0;
+	maxAmbientLights = 0;
+	maxPointLights = 0;
 }
 
 ShaderProgram::~ShaderProgram() {
@@ -131,26 +149,33 @@ GLuint ShaderProgram::getAttributeLocation(std::string name) {
 void ShaderProgram::useProgram() {
 	if (programHandle == (GLuint) -1)
 		return;
+	GameEngine::engineShaderProgram = this;
 	glUseProgram(programHandle);
+	GameEngine::engine->useLights();
 }
 
 void ShaderProgram::uniformInt(std::string pos, GLint value) {
-	useProgram();
+	glUseProgram(programHandle);
 	glUniform1iv(getUniformLocation(pos), 1, &value);
 }
 
 void ShaderProgram::uniformFloat(std::string pos, GLfloat value) {
-	useProgram();
+	glUseProgram(programHandle);
 	glUniform1fv(getUniformLocation(pos), 1, &value);
 }
 
+void ShaderProgram::uniformFloatArray(std::string pos, GLfloat* value, GLuint amount) {
+	glUseProgram(programHandle);
+	glUniform1fv(getUniformLocation(pos), amount, value);
+}
+
 void ShaderProgram::uniformVec3(std::string pos, glm::vec3 value) {
-	useProgram();
+	glUseProgram(programHandle);
 	glUniform3fv(getUniformLocation(pos), 1, &value[0]);
 }
 
 void ShaderProgram::uniformMat4(std::string pos, glm::mat4 value) {
-	useProgram();
+	glUseProgram(programHandle);
 	glUniformMatrix4fv(getUniformLocation(pos), 1, GL_FALSE, &value[0][0]);
 }
 
