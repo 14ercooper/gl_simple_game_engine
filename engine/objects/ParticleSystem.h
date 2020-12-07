@@ -33,9 +33,16 @@ public:
 	
 	// How many particles are in this system?
 	int size();
-private:
+
+	// Set the particle shader
+	void setParticleShader(ParticleShader* shader, bool destroyOld);
+protected:
+	// For child classes
+	ParticleSystem();
+
 	// Stores the shader, particles, and strength of gravity
 	ParticleShader* shader;
+	bool delParticleShader;
 	std::vector<Particle> particles;
 	float gravity;
 };

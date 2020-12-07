@@ -12,17 +12,18 @@
 class ParticleShader : public ShaderProgram {
 public:
 	ParticleShader(std::string texture);
-	~ParticleShader();
+	virtual ~ParticleShader();
 
-	void enableAttribs();
+	virtual void enableAttribs();
 
-	void drawParticle(float x, float y, float z, float size);
+	virtual void drawParticle(float x, float y, float z, float size);
 
 	static const char* vertexProgram;
 	static const char* geometryProgram;
 	static const char* fragmentProgram;
 
-private:
+protected:
+	ParticleShader();
 	GLuint vao, vbo, textureId;
 };
 

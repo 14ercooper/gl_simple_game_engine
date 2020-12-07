@@ -5,11 +5,12 @@ ParticleSystem::ParticleSystem (std::string texture, float gravity) {
 	shader = new ParticleShader(texture);
 	material = new Material();
 	model = new Model();
+	delParticleShader = true;
 	this->gravity = gravity;
 }
 
 ParticleSystem::~ParticleSystem() {
-	if (delShader)
+	if (delParticleShader)
 		delete shader;
 }
 
@@ -54,4 +55,16 @@ void ParticleSystem::addParticle(float x, float y, float z, float dx, float dy, 
 
 int ParticleSystem::size() {
 	return particles.size();
+}
+
+void ParticleSystem::setParticleShader(ParticleShader* shader, bool destroyOld) {
+	if (destroyOld && this->shader != nullptr) {
+		delete shader;
+	}
+	delParticleShader = false;
+	this->shader = shader;
+}
+
+ParticleSystem::ParticleSystem() {
+	// Do nothing - for child classes
 }

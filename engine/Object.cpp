@@ -45,7 +45,7 @@ Object::~Object() {
 }
 
 void Object::setShader(ShaderProgram* shader, bool deleteOld) {
-	if (deleteOld)
+	if (deleteOld && this->shaderProgram != nullptr)
 		delete shaderProgram;
 	delShader = false;
 	shaderProgram = shader;

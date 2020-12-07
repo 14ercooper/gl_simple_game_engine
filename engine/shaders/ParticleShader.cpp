@@ -135,3 +135,7 @@ void ParticleShader::drawParticle(float x, float y, float z, float size) {
 	glBufferSubData(GL_ARRAY_BUFFER, 0, 4 * sizeof(GLfloat), data);
 	glDrawArrays(GL_POINTS, 0, 1);
 }
+
+ParticleShader::ParticleShader() {
+	// Do nothing - this is to stop C++ auto parent calls from failing
+}
