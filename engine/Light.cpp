@@ -19,7 +19,7 @@ Light::Light(LIGHT_TYPE type, float r, float g, float b, float intensity, float 
 	this->g = g;
 	this->b = b;
 	this->intensity = intensity;
-	this->x = z;
+	this->x = x;
 	this->y = y;
 	this->z = z;
 	this->doDestroy = false;
