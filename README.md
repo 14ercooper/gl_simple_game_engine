@@ -1,10 +1,10 @@
-## 14erEngine
+## 14erEngine v1
 
 ### Lightweight 3D Game Engine
 
 #### By 14er
 
-This is still very much a WIP. Check back later.
+A very simple 3d game engine I made just to see if I could. Not a whole lot interesting, but it does work (complete with rendering, physics, objects, etc).
 
 ## Dependencies
 
